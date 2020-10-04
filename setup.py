@@ -10,7 +10,9 @@ setup(
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            'departure=departure.cli:entry_point'
+            'departure-client=departure.cli.client:entry_point',
+            'departure-server=departure.cli.server:entry_point',
+            'departure-web=departure.cli.web:start'
         ],
     }
 )
