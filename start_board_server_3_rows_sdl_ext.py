@@ -1,22 +1,18 @@
 from concurrent import futures
 
-import sys
-import timeit
-import time
-import sdl2.ext
 import threading
+
+import sdl2.ext
 import grpc
 
-import departure_board.board.animator as animator
-import departure_board.board.board_updater as board_updater
-import departure_board.board.board as board
-import departure_board.board.contents as contents
-import departure_board.board.movement as movement
-import departure_board.renderer.local_sdl_ext as local_sdl_ext
-import departure_board.board.departure_board_pb2_grpc as departure_board_pb2_grpc
+import departure.board.animator as animator
+import departure.board.board_updater as board_updater
+import departure.board.board as board
+import departure.renderer.local_sdl_ext as local_sdl_ext
+import departure.board.departure_pb2_grpc as departure_pb2_grpc
 
 
-class BoardManagerServicer(departure_board_pb2_grpc.BoardManagerServicer):
+class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
     def __init__(
         self,
         target_board_updater: board_updater.BoardUpdater_192_32_3_Rows_From_ProtocolBuffers,
@@ -56,7 +52,7 @@ def run():
 
     # initialise gRPC server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=3))
-    departure_board_pb2_grpc.add_BoardManagerServicer_to_server(
+    departure_pb2_grpc.add_BoardManagerServicer_to_server(
         BoardManagerServicer(target_board_updater), server
     )
     server.add_insecure_port("[::]:50051")
@@ -76,7 +72,6 @@ def run():
             end_event.wait(0.5)
     except KeyboardInterrupt:
         print("received keyboard interrupt")  # debugging
-        pass
 
     end_event.set()
     server.stop(0)

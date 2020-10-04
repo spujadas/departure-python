@@ -1,12 +1,16 @@
 """
-Setup for departure_board module
+Setup for departure module
 """
 
 from setuptools import setup, find_packages
 
 setup(
-    name="departure-board",
+    name="departure",
     version="1.0",
     packages=find_packages(),
-    entry_points={"console_scripts": "db=departure_board.cli:entry_point"},
+    entry_points={
+        "console_scripts": [
+            'departure=departure.cli:entry_point'
+        ],
+    }
 )
