@@ -1,6 +1,6 @@
 import pygame
 
-from . import renderer
+from departure.renderer import renderer
 
 
 class PygameRenderer(renderer.Renderer):
@@ -8,7 +8,7 @@ class PygameRenderer(renderer.Renderer):
         self.screen = None
         pygame.init()
 
-    def initialise(self, size):
+    def initialise(self, size):  # pylint: disable=arguments-differ
         self.screen = pygame.display.set_mode(size)
 
     def render_pixel(self, x, y, colour):
@@ -28,20 +28,11 @@ class PygameRenderer(renderer.Renderer):
 
 
 class PygameRendererActualSize(PygameRenderer):
-    def __init__(self):
-        super().__init__()
-
-    def initialise(self, size):
-        super().initialise(size)
-
     def render_pixel(self, x, y, colour):
         self.screen.set_at((x, y), colour)
 
 
 class PygameRendererLarge(PygameRenderer):
-    def __init__(self):
-        super().__init__()
-
     def initialise(self, size):
         super().initialise((5 * size[0], 5 * size[1]))
 

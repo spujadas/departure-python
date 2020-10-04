@@ -2,7 +2,7 @@ import os
 import ctypes.util
 import sdl2
 
-from . import renderer
+from departure.renderer import renderer
 
 
 class SdlRendererException(Exception):
@@ -19,7 +19,7 @@ class SdlRenderer(renderer.Renderer):
         self.window = None
         self.renderer = None
 
-    def initialise(self, size):
+    def initialise(self, size):  # pylint: disable=arguments-differ
         sdl2.SDL_Init(sdl2.SDL_INIT_VIDEO)
         self.window = sdl2.SDL_CreateWindow(
             b"Departure board",
@@ -54,21 +54,12 @@ class SdlRenderer(renderer.Renderer):
 
 
 class SdlRendererActualSize(SdlRenderer):
-    def __init__(self):
-        super().__init__()
-
-    def initialise(self, size):
-        super().initialise(size)
-
     def render_pixel(self, x, y, colour):
         sdl2.SDL_SetRenderDrawColor(self.renderer, *colour, sdl2.SDL_ALPHA_OPAQUE)
         sdl2.SDL_RenderDrawPoint(self.renderer, x, y)
 
 
 class SdlRendererLarge(SdlRenderer):
-    def __init__(self):
-        super().__init__()
-
     def initialise(self, size):
         super().initialise((5 * size[0], 5 * size[1]))
 

@@ -1,16 +1,22 @@
+"""
+CLI for Pygame 3-row renderer
+"""
+
 from concurrent import futures
-
 import threading
-import ctypes
+import logging
 
-import sdl2
+import click
+import pygame
 import grpc
 
 import departure.board.animator as animator
 import departure.board.board_updater as board_updater
 import departure.board.board as board
-import departure.renderer.local_sdl as local_sdl
+import departure.renderer.pygame.pygame as pygame_renderer
 import departure.board.departure_pb2_grpc as departure_pb2_grpc
+
+logger = logging.getLogger(__name__)
 
 
 class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
@@ -23,13 +29,13 @@ class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
     def BoardSectionsUpdate(self, request, context):
         return self.target_board_updater.update(request)
 
-
+@click.command(name='pygame')
 def run():
     tfl_board = board.Board(192, 32)
 
     # initialise renderer
-    sdl_renderer = local_sdl.SdlRendererActualSize()
-    sdl_renderer.initialise((192, 32))
+    target_renderer = pygame_renderer.PygameRendererLarge()
+    target_renderer.initialise((192, 32))
 
     board_lock = threading.RLock()
     end_event = threading.Event()
@@ -37,7 +43,7 @@ def run():
     # initialise board animator
     animator_thread = animator.BoardAnimator(
         board=tfl_board,
-        renderer=sdl_renderer,
+        renderer=target_renderer,
         time_step_in_s=0.05,
         board_lock=board_lock,
         end_event=end_event,
@@ -61,33 +67,23 @@ def run():
     animator_thread.start()
     server.start()
 
-    running = True
-    event = sdl2.SDL_Event()
+    print("stop with Ctrl-C on *QWERTY* keyboard\n")
 
-    try:
-        while running:
-            if sdl2.SDL_PollEvent(ctypes.byref(event)) != 0:
-                if event.type == sdl2.SDL_QUIT:
-                    print("received SDL QUIT event")  # debugging
-                    running = False
-                    break
-                elif event.type == sdl2.SDL_KEYDOWN:
-                    if event.key.keysym.sym == sdl2.SDLK_b:
-                        is_borderless = (
-                            sdl2.SDL_GetWindowFlags(sdl_renderer.window)
-                            & sdl2.SDL_WINDOW_BORDERLESS
-                        )
-                        toggle = sdl2.SDL_TRUE if is_borderless else sdl2.SDL_FALSE
-                        sdl2.SDL_SetWindowBordered(sdl_renderer.window, toggle)
-            end_event.wait(0.5)
-    except KeyboardInterrupt:
-        print("received keyboard interrupt")  # debugging
+    while not end_event.is_set():
+        # note: this isn't good, but it's required by pygame :(
+        for event in pygame.event.get():
+            if (
+                event.type == pygame.KEYUP
+                and event.key == pygame.K_c
+                and event.mod & pygame.KMOD_CTRL
+            ):
+                logger.info("received interrupt")
+                end_event.set()
+                server.stop(0)
+                animator_thread.join()
+        end_event.wait(0.5)
 
-    end_event.set()
-    server.stop(0)
-    animator_thread.join()
-
-    sdl_renderer.terminate()
+    target_renderer.terminate()
 
 
 if __name__ == "__main__":

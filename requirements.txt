@@ -16,8 +16,6 @@ coverage==4.5.2
 cryptography==2.5
 # dataclasses==0.7
 defusedxml==0.5.0
-# Editable install with no version control (departure-board==1.0)
-# -e e:\deepsigh\projects\hardware\departure-board\python
 docopt==0.6.2
 fastapi==0.61.1
 grpcio==1.17.1
@@ -38,7 +36,7 @@ protobuf==3.6.1
 py==1.7.0
 pycparser==2.19
 pydantic==1.6.1
-pygame==1.9.4
+pygame==1.9.6
 pylint==2.6.0
 pyOpenSSL==19.0.0
 pyreadline==2.1

@@ -1,15 +1,19 @@
 from concurrent import futures
 
 import threading
+import logging
 
 import sdl2.ext
 import grpc
+import click
 
 import departure.board.animator as animator
 import departure.board.board_updater as board_updater
 import departure.board.board as board
-import departure.renderer.local_sdl_ext as local_sdl_ext
+import departure.renderer.sdl_ext.sdl_ext as sdl_ext_renderer
 import departure.board.departure_pb2_grpc as departure_pb2_grpc
+
+logger = logging.getLogger(__name__)
 
 
 class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
@@ -22,14 +26,18 @@ class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
     def BoardSectionsUpdate(self, request, context):
         return self.target_board_updater.update(request)
 
-
-def run():
+@click.command(name='sdl-ext')
+@click.option('--small', is_flag=True)
+def run(small=False):
     tfl_board = board.Board(192, 32)
 
     # initialise renderer
-    sdl_renderer = local_sdl_ext.SdlExtRendererLarge()
-    # sdl_renderer = local_sdl_ext.SdlExtRendererActualSize()
-    sdl_renderer.initialise((192, 32))
+    if small:
+        target_renderer = sdl_ext_renderer.SdlExtRendererActualSize()
+    else:
+        target_renderer = sdl_ext_renderer.SdlExtRendererLarge()
+
+    target_renderer.initialise((192, 32))
 
     board_lock = threading.RLock()
     end_event = threading.Event()
@@ -37,7 +45,7 @@ def run():
     # initialise board animator
     animator_thread = animator.BoardAnimator(
         board=tfl_board,
-        renderer=sdl_renderer,
+        renderer=target_renderer,
         time_step_in_s=0.05,
         board_lock=board_lock,
         end_event=end_event,
@@ -66,18 +74,18 @@ def run():
         while running:
             for event in sdl2.ext.get_events():
                 if event.type == sdl2.SDL_QUIT:
-                    print("received SDL QUIT event")  # debugging
+                    logger.info("received SDL QUIT event")
                     running = False
                     break
             end_event.wait(0.5)
     except KeyboardInterrupt:
-        print("received keyboard interrupt")  # debugging
+        logger.info("received keyboard interrupt")
 
     end_event.set()
     server.stop(0)
     animator_thread.join()
 
-    sdl_renderer.terminate()
+    target_renderer.terminate()
 
 
 if __name__ == "__main__":
