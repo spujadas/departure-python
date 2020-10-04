@@ -1,0 +1,2 @@
+class NSException(Exception):
+    pass

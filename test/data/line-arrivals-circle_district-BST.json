@@ -1,0 +1,33 @@
+[
+  {
+    "$type": "Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities",
+    "id": "1876607964",
+    "operationType": 1,
+    "vehicleId": "201",
+    "naptanId": "940GZZLUBST",
+    "stationName": "Baker Street Underground Station",
+    "lineId": "circle",
+    "lineName": "Circle",
+    "platformName": "Eastbound - Platform 5",
+    "direction": "inbound",
+    "bearing": "",
+    "destinationNaptanId": "940GZZLUERC",
+    "destinationName": "Edgware Road (Circle Line) Underground Station",
+    "timestamp": "2019-01-11T18:48:08.921013Z",
+    "timeToStation": 1741,
+    "currentLocation": "At Blackfriars Platform 1",
+    "towards": "Edgware Road (Circle)",
+    "expectedArrival": "2019-01-11T19:17:09Z",
+    "timeToLive": "2019-01-11T19:17:09Z",
+    "modeName": "tube",
+    "timing": {
+      "$type": "Tfl.Api.Presentation.Entities.PredictionTiming, Tfl.Api.Presentation.Entities",
+      "countdownServerAdjustment": "00:00:00",
+      "source": "0001-01-01T00:00:00",
+      "insert": "0001-01-01T00:00:00",
+      "read": "2019-01-11T18:48:03.608Z",
+      "sent": "2019-01-11T18:48:08Z",
+      "received": "0001-01-01T00:00:00"
+    }
+  }
+]

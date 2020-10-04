@@ -1,0 +1,2 @@
+class TransilienException(Exception):
+    pass

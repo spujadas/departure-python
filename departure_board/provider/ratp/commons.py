@@ -1,0 +1,2 @@
+class RatpException(Exception):
+    pass

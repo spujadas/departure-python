@@ -1,0 +1,2 @@
+class BoardException(Exception):
+    pass

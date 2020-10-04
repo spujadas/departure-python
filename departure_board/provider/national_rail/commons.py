@@ -1,0 +1,2 @@
+class NationalRailException(Exception):
+    pass
