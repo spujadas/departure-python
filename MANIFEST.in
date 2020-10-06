@@ -1,0 +1,8 @@
+include departure/provider/national_rail/data/station_codes.csv
+include departure/provider/ns/data/stations-2020-01-nl.csv
+include departure/provider/ratp/data/Wsiv.wsdl
+include departure/provider/sncf/data/referentiel-gares-voyageurs.json
+include departure/provider/tfl_tube/data/*.json
+include departure/provider/transilien/data/referentiel-gares-voyageurs.json
+include departure/provider/transilien/data/sncf-gares-et-arrets-transilien-ile-de-france.json
+include departure/board/fonts/*.bdf
