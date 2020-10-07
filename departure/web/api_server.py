@@ -3,7 +3,6 @@
 # 3) uvicorn api_server:app --reload --host 0.0.0.0
 
 import time
-import logging
 import os
 
 from fastapi import FastAPI
@@ -17,18 +16,12 @@ import departure.provider.tfl_tube.server as tfl_tube_server
 import departure.provider.transilien.server as transilien_server
 import departure.provider.ns.server as ns_server
 from departure.board import board_client
+import departure.commons as commons
 from departure import admin
 
 
 # initialise logging
-logger = logging.getLogger('departure')
-logger.setLevel(level=logging.DEBUG)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
-
+commons.init_logging()
 
 # initialise app
 app = FastAPI()

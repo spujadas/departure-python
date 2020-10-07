@@ -1,7 +1,6 @@
-import logging
-
 import click
 
+import departure.commons as commons
 from departure.provider.ns import cli as ns
 from departure.provider.national_rail import cli as national_rail
 from departure.provider.ratp import cli as ratp
@@ -9,14 +8,9 @@ from departure.provider.sncf import cli as sncf
 from departure.provider.tfl_tube import cli as tfl_tube
 from departure.provider.transilien import cli as transilien
 
+
 # initialise logging
-logger = logging.getLogger('departure')
-logger.setLevel(level=logging.DEBUG)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
+commons.init_logging()
 
 # CLI entry point
 @click.group()
