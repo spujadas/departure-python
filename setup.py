@@ -11,7 +11,8 @@ setup(
     entry_points={
         "console_scripts": [
             "departure-client=departure.cli.client:entry_point",
-            "departure-server=departure.cli.server:entry_point",
+            "departure-server-pygame=departure.cli.server_pygame:entry_point",
+            "departure-server-sdl=departure.cli.server_sdl:entry_point",
             "departure-web=departure.cli.web:start"
         ],
     },
