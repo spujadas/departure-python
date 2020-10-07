@@ -26,7 +26,7 @@ class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
     def BoardSectionsUpdate(self, request, context):
         return self.target_board_updater.update(request)
 
-@click.command(name='sdl-ext')
+@click.command(name='ext')
 @click.option('--small', is_flag=True)
 def run(small=False):
     tfl_board = board.Board(192, 32)
