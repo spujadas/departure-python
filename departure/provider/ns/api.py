@@ -13,13 +13,8 @@ from . import commons
 logger = logging.getLogger(__name__)
 
 
-def check_env_vars():
-    if "NS_API_KEY" not in os.environ:
-        raise commons.NSException("missing NS_API_KEY env var")
-
-
 def api_request(url: str, payload: dict) -> str:
-    check_env_vars()
+    commons.check_env_vars()
 
     try:
         response = requests.get(

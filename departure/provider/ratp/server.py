@@ -60,6 +60,17 @@ async def next_departures(line_id: str, line_station_id: str, direction: str):
 #   -d {\"line_id\":\"RB\", \"line_station_id\":\"15\", \"direction\":\"A\"}
 @router.post("/start-client")
 async def start_client(station_direction: StationDirection, request: Request):
+    # check params
+    try:
+        ratp.check_params(
+            station_direction.line_id,
+            station_direction.line_station_id,
+            station_direction.direction
+        )
+    except commons.RatpException as e:
+        logger.warning(str(e))
+        return {"status": "error", "message": str(e)}
+
     # stop board client if already running
     if request.app.board_client.running:
         request.app.board_client.running = False

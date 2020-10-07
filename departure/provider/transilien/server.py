@@ -1,5 +1,6 @@
 import threading
 import time
+import logging
 
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -7,20 +8,14 @@ from starlette.requests import Request
 
 from . import transilien, commons, view_model, data_updater
 
+logger = logging.getLogger(__name__)
+
 
 class Station(BaseModel):
     station_id: str
 
 
 router = APIRouter()
-
-
-def check_params(station_id):
-    try:
-        transilien.check_params(station_id)
-    except commons.TransilienException as e:
-        return {"status": "error", "message": str(e)}
-    return {}
 
 
 @router.get("/search/{search_string}")
@@ -33,12 +28,13 @@ async def search(search_string):
 async def next_trains(station_id):
     # check parameters
     station_id = station_id.upper()
-    params_status = check_params(station_id)
-    if params_status:
-        return params_status
+    try:
+        response = transilien.next_trains(station_id)
+    except commons.TransilienException as e:
+        return {"status": "error", "message": str(e)}
 
     # request next services
-    return {"status": "OK", "response": transilien.next_trains(station_id)}
+    return {"status": "OK", "response": response}
 
 
 # curl -X POST http://localhost:8000/transilien/start-client -d {\"station_id\":\"87384008\"}
@@ -46,9 +42,12 @@ async def next_trains(station_id):
 async def start_client(station: Station, request: Request):
     # check parameters
     station_id = station.station_id
-    params_status = check_params(station_id)
-    if params_status:
-        return params_status
+    try:
+        commons.check_env_vars()
+        transilien.check_params(station_id)
+    except commons.TransilienException as e:
+        logger.warning(str(e))
+        return {"status": "error", "message": str(e)}
 
     # stop board client if already running
     if request.app.board_client.running:

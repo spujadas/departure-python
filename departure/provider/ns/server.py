@@ -1,5 +1,6 @@
 import threading
 import time
+import logging
 
 from fastapi import APIRouter
 from pydantic import BaseModel
@@ -7,6 +8,7 @@ from starlette.requests import Request
 
 from . import ns, commons, view_model, data_updater
 
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -31,16 +33,19 @@ async def search(search_string):
 # debugging only
 @router.get("/next/{station_code}")
 async def next_departures(station_code):
-    # check parameters
+    # request next departures
     station_code = station_code.upper()
-    params_status = check_params(station_code)
-    if params_status:
-        return params_status
+
+    try:
+        response = ns.departures_with_schedule(station_code)
+    except commons.NSException as e:
+        logger.warning(str(e))
+        return {"status": "error", "message": str(e)}
 
     # request next services
     return {
         "status": "OK",
-        "response": ns.departures_with_schedule(station_code),
+        "response": response,
     }
 
 
@@ -49,9 +54,12 @@ async def next_departures(station_code):
 async def start_client(station: Station, request: Request):
     # check parameters
     station_code = station.code.upper()
-    params_status = check_params(station_code)
-    if params_status:
-        return params_status
+    try:
+        ns.check_params(station_code)
+        commons.check_env_vars()
+    except commons.NSException as e:
+        logger.warning(str(e))
+        return {"status": "error", "message": str(e)}
 
     # stop board client if already running
     if request.app.board_client.running:

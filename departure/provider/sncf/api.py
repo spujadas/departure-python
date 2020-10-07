@@ -9,13 +9,8 @@ from . import commons
 logger = logging.getLogger(__name__)
 
 
-def check_env_vars():
-    if "SNCF_KEY" not in os.environ:
-        raise commons.SncfException("missing env var SNCF_KEY")
-
-
 def api_request(url: str):
-    check_env_vars()
+    commons.check_env_vars()
 
     try:
         response = requests.get(

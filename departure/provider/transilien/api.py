@@ -9,16 +9,8 @@ from . import commons
 logger = logging.getLogger(__name__)
 
 
-def check_env_vars():
-    for transilien_env_var in ["TRANSILIEN_USER", "TRANSILIEN_PASSWORD"]:
-        if transilien_env_var not in os.environ:
-            raise commons.TransilienException(
-                f"missing env var {transilien_env_var}"
-            )
-
-
 def api_request(url: str):
-    check_env_vars()
+    commons.check_env_vars()
 
     try:
         response = requests.get(

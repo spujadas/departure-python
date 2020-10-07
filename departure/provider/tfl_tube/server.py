@@ -62,6 +62,7 @@ async def start_client(station_direction: StationDirection, request: Request):
             station_direction.station_id,
             station_direction.direction,
         )
+        commons.check_env_vars()
     except commons.TflTubeException as e:
         logger.warning(str(e))
         return {"status": "error", "message": str(e)}

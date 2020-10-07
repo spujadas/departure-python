@@ -1,6 +1,16 @@
 from . import api, commons
 
 
+def check_params(line_id: str, station_id: str, direction_sens: str):
+    response = api.get_missions_next(line_id, station_id, direction_sens)
+
+    # invalid station
+    if response.ambiguityMessage is not None:
+        raise commons.RatpException(
+            "invalid line code and/or station code and/or direction"
+        )
+
+
 def lines_by_name(name_query: str = ""):
     results = []
 

@@ -10,14 +10,9 @@ from . import commons
 logger = logging.getLogger(__name__)
 
 
-def check_env_vars():
-    if "TFL_APP_KEY" not in os.environ:
-        raise commons.TflTubeException("missing env var TFL_APP_KEY")
-
-
 def unified_api_request(base_url: str, base_queries: List[str] = None):
     # check environment variables
-    check_env_vars()
+    commons.check_env_vars()
 
     # build URL and send request
     url = f'{base_url}?app_key={os.environ["TFL_APP_KEY"]}'

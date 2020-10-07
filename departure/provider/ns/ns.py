@@ -5,15 +5,11 @@ Core functions for Nederlandse Spoorwegen
 from . import api, data, commons
 
 
-def check_params(station_code: str = None):
-    if not any((station_code)):
-        return
-
+def check_params(station_code: str):
     stations = data.STATIONS_BY_NS_CODE
 
-    if station_code is not None:
-        if station_code not in stations:
-            raise commons.NSException(f"invalid station code {station_code}")
+    if station_code not in stations:
+        raise commons.NSException(f"invalid station code {station_code}")
 
 
 def departures_with_schedule(

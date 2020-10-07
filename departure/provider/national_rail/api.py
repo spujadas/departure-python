@@ -6,33 +6,30 @@ from zeep import xsd
 from . import commons
 
 
-def soap_client(ldb_token: str =None):
-    if ldb_token is None:  # get from env vars by default
-        try:
-            ldb_token = os.environ["LDB_TOKEN"]
-        except KeyError:
-            raise commons.NationalRailException("missing env var LDB_TOKEN") from KeyError
+HEADER = xsd.Element(
+    "{http://thalesgroup.com/RTTI/2013-11-28/Token/types}AccessToken",
+    xsd.ComplexType(
+        [
+            xsd.Element(
+                "{http://thalesgroup.com/RTTI/2013-11-28/Token/types}"
+                "TokenValue",
+                xsd.String(),
+            ),
+        ]
+    ),
+)
 
-    header = xsd.Element(
-        "{http://thalesgroup.com/RTTI/2013-11-28/Token/types}AccessToken",
-        xsd.ComplexType(
-            [
-                xsd.Element(
-                    "{http://thalesgroup.com/RTTI/2013-11-28/Token/types}"
-                    "TokenValue",
-                    xsd.String(),
-                ),
-            ]
-        ),
-    )
+WSDL = (
+    "http://lite.realtime.nationalrail.co.uk/OpenLDBWS/wsdl.aspx?ver=2017-10-01"
+)
 
-    wsdl = (
-        "http://lite.realtime.nationalrail.co.uk/OpenLDBWS/wsdl.aspx?ver=2017-10-01"
-    )
+
+def soap_client():
+    commons.check_env_vars()
 
     return {
-        'headers': [header(TokenValue=ldb_token)],
-        'client': Client(wsdl=wsdl)
+        'headers': [HEADER(TokenValue=os.environ['LDB_TOKEN'])],
+        'client': Client(wsdl=WSDL)
     }
 
 

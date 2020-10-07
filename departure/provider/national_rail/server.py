@@ -1,26 +1,20 @@
 import threading
 import time
+import logging
 
 from fastapi import APIRouter
 from pydantic import BaseModel
 from starlette.requests import Request
 
-from . import api, national_rail, commons, view_model, data_updater
+from . import national_rail, commons, view_model, data_updater
 
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
 
 class Station(BaseModel):
     code: str
-
-
-def check_params(station_code):
-    try:
-        national_rail.check_params(station_code)
-    except commons.NationalRailException:
-        return {"status": "error", "message": "invalid station code"}
-    return {}
 
 
 @router.get("/search/{search_string}")
@@ -31,16 +25,18 @@ async def search(search_string):
 # debugging only
 @router.get("/next/{station_code}")
 async def next_departures(station_code):
-    # check parameters
-    station_code = station_code.upper()
-    params_status = check_params(station_code)
-    if params_status:
-        return params_status
-
     # request next services
+    station_code = station_code.upper()
+    try:
+        response = national_rail.next_services(station_code)
+    except commons.NationalRailException as e:
+        logger.warning(str(e))
+        return {"status": "error", "message": str(e)}
+
+    # return next services
     return {
         "status": "OK",
-        "response": national_rail.next_services(station_code),
+        "response": response,
     }
 
 
@@ -49,9 +45,12 @@ async def next_departures(station_code):
 async def start_client(station: Station, request: Request):
     # check parameters
     station_code = station.code.upper()
-    params_status = check_params(station_code)
-    if params_status:
-        return params_status
+    try:
+        commons.check_env_vars()
+        national_rail.check_params(station_code)
+    except commons.NationalRailException as e:
+        logger.warning(str(e))
+        return {"status": "error", "message": str(e)}
 
     # stop board client if already running
     if request.app.board_client.running:
