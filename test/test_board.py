@@ -1,5 +1,7 @@
-import departure_board.board.board as board
-import departure_board.board.movement as movement
+import departure.board.board as board
+import departure.board.movement as movement
+
+# pylint: disable=attribute-defined-outside-init,protected-access
 
 
 class TestContentUpdateWithMovement:
@@ -87,9 +89,9 @@ class TestBoardSection:
         _ = board_section.pixels()
 
         assert board_section._movement == movement1
-        assert board_section._has_changed == False
+        assert not board_section._has_changed
 
         board_section.update_movement(movement2)
 
         assert board_section._movement == movement2
-        assert board_section._has_changed == True
+        assert board_section._has_changed

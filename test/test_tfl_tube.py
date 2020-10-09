@@ -1,7 +1,9 @@
 import json
 import pathlib
 
-import departure_board.provider.tfl.tfl as tfl
+import departure.provider.tfl_tube.tfl_tube as tfl_tube
+
+# pylint: disable=too-many-lines
 
 
 class TestIsDepartingFromStationInDirection:
@@ -16,7 +18,7 @@ class TestIsDepartingFromStationInDirection:
     # }
 
     def test_no_platform_direction_actual_direction(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "central",
             "940GZZLULGN",
             "Westbound",
@@ -26,20 +28,17 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_no_platform_direction_incorrect_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "central",
-                "940GZZLULGN",
-                "Eastbound",
-                "940GZZLUNHT",
-                platform_departure_direction=None,
-                train_canonical_direction="inbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "central",
+            "940GZZLULGN",
+            "Eastbound",
+            "940GZZLUNHT",
+            platform_departure_direction=None,
+            train_canonical_direction="inbound",
         )
 
     def test_no_platform_direction_equivalent_direction(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "central",
             "940GZZLULGN",
             "Outer Rail",
@@ -49,20 +48,17 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_no_platform_direction_equivalent_incorrect_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "central",
-                "940GZZLULGN",
-                "Inner Rail",
-                "940GZZLUNHT",
-                platform_departure_direction=None,
-                train_canonical_direction="inbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "central",
+            "940GZZLULGN",
+            "Inner Rail",
+            "940GZZLUNHT",
+            platform_departure_direction=None,
+            train_canonical_direction="inbound",
         )
 
     def test_hainault_loop_actual_south_of_hlt(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "central",
             "940GZZLUFLP",
             "Westbound",
@@ -72,7 +68,7 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_hainault_loop_actual_south_of_hlt_no_direction(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "central",
             "940GZZLUFLP",
             "Westbound",
@@ -82,7 +78,7 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_hainault_loop_actual_north_of_hlt(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "central",
             "940GZZLURVY",
             "Westbound",
@@ -92,7 +88,7 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_hainault_loop_actual_north_of_hlt_no_canonical_dir(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "central",
             "940GZZLURVY",
             "Westbound",
@@ -102,7 +98,7 @@ class TestIsDepartingFromStationInDirection:
 
     def test_cannot_determine(self):
         assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
+            tfl_tube.will_arriving_train_depart_from_station_in_direction(
                 "district",
                 "940GZZLUVIC",
                 "Westbound",
@@ -114,33 +110,27 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_at_terminating_station_no_departure_in_arrival_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "district",
-                "940GZZLUWIM",
-                "Westbound",
-                None,
-                platform_departure_direction="Westbound",
-                train_canonical_direction=None,
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "district",
+            "940GZZLUWIM",
+            "Westbound",
+            None,
+            platform_departure_direction="Westbound",
+            train_canonical_direction=None,
         )
 
     def test_at_terminating_station_no_departure_in_departure_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "district",
-                "940GZZLUWIM",
-                "Westbound",
-                None,
-                platform_departure_direction="Eastbound",
-                train_canonical_direction=None,
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "district",
+            "940GZZLUWIM",
+            "Westbound",
+            None,
+            platform_departure_direction="Eastbound",
+            train_canonical_direction=None,
         )
 
     def test_at_inline_terminating_station_not_terminating_arr_direction(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "jubilee",
             "940GZZLUWYP",
             "Eastbound",
@@ -151,21 +141,18 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_at_inline_terminating_station_not_terminating_dep_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "jubilee",
-                "940GZZLUWYP",
-                "Westbound",
-                None,
-                platform_departure_direction="Eastbound",
-                train_canonical_direction=None,
-                destination_station_id="940GZZLUSTD",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "jubilee",
+            "940GZZLUWYP",
+            "Westbound",
+            None,
+            platform_departure_direction="Eastbound",
+            train_canonical_direction=None,
+            destination_station_id="940GZZLUSTD",
         )
 
     def test_at_inline_terminating_station_not_terminating_arr_can_dir(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "jubilee",
             "940GZZLUWYP",
             "Eastbound",
@@ -176,61 +163,49 @@ class TestIsDepartingFromStationInDirection:
         )
 
     def test_at_inline_terminating_station_not_terminating_dep_can_dir(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "jubilee",
-                "940GZZLUWYP",
-                "Westbound",
-                None,
-                platform_departure_direction="Eastbound",
-                train_canonical_direction="outbound",
-                destination_station_id="940GZZLUSTD",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "jubilee",
+            "940GZZLUWYP",
+            "Westbound",
+            None,
+            platform_departure_direction="Eastbound",
+            train_canonical_direction="outbound",
+            destination_station_id="940GZZLUSTD",
         )
 
     def test_at_inline_terminating_station_has_destination_station_id(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "jubilee",
-                "940GZZLUWYP",
-                "Westbound",
-                None,
-                platform_departure_direction="Eastbound",
-                train_canonical_direction="outbound",
-                destination_station_id="940GZZLUWYP",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "jubilee",
+            "940GZZLUWYP",
+            "Westbound",
+            None,
+            platform_departure_direction="Eastbound",
+            train_canonical_direction="outbound",
+            destination_station_id="940GZZLUWYP",
         )
 
     def test_at_inline_terminating_station_has_towards_station_id(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "jubilee",
-                "940GZZLUWYP",
-                "Westbound",
-                "940GZZLUWYP",
-                platform_departure_direction="Eastbound",
-                train_canonical_direction="outbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "jubilee",
+            "940GZZLUWYP",
+            "Westbound",
+            "940GZZLUWYP",
+            platform_departure_direction="Eastbound",
+            train_canonical_direction="outbound",
         )
 
     def test_at_inline_terminating_station_no_destination_dep_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "jubilee",
-                "940GZZLUWYP",
-                "Westbound",
-                None,
-                platform_departure_direction="Eastbound",
-                train_canonical_direction="outbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "jubilee",
+            "940GZZLUWYP",
+            "Westbound",
+            None,
+            platform_departure_direction="Eastbound",
+            train_canonical_direction="outbound",
         )
 
     def test_at_inline_terminating_station_no_destination_arr_direction(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "jubilee",
             "940GZZLUWYP",
             "Eastbound",
@@ -239,8 +214,8 @@ class TestIsDepartingFromStationInDirection:
             train_canonical_direction="outbound",
         )
 
-    def test_mismatching_direction_canonical_direction(self, capsys):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+    def test_mismatching_direction_canonical_direction(self, caplog):
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "district",
             "940GZZLUEMB",
             "Eastbound",
@@ -248,103 +223,81 @@ class TestIsDepartingFromStationInDirection:
             platform_departure_direction="Eastbound",
             train_canonical_direction="inbound",
         )
-        captured = capsys.readouterr()
-        assert (
-            captured.out == "incoherent direction at 940GZZLUEMB "
+        assert caplog.text.endswith(
+            "incoherent direction at 940GZZLUEMB "
             "(district): towards None / destination None / Eastbound "
             "platform / inbound\n"
         )
 
     def test_circle_terminating_at_erc_arr_platform_arr_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle",
-                "940GZZLUERC",
-                "Eastbound",
-                "940GZZLUERC",
-                platform_departure_direction="Eastbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle",
+            "940GZZLUERC",
+            "Eastbound",
+            "940GZZLUERC",
+            platform_departure_direction="Eastbound",
         )
 
     def test_circle_terminating_at_erc_arr_platform_dep_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle",
-                "940GZZLUERC",
-                "Westbound",
-                "940GZZLUERC",
-                platform_departure_direction="Eastbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle",
+            "940GZZLUERC",
+            "Westbound",
+            "940GZZLUERC",
+            platform_departure_direction="Eastbound",
         )
 
     def test_circle_terminating_at_erc_dep_platform_arr_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle",
-                "940GZZLUERC",
-                "Eastbound",
-                "940GZZLUERC",
-                platform_departure_direction="Westbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle",
+            "940GZZLUERC",
+            "Eastbound",
+            "940GZZLUERC",
+            platform_departure_direction="Westbound",
         )
 
     def test_circle_terminating_at_erc_dep_platform_dep_direction(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle",
-                "940GZZLUERC",
-                "Westbound",
-                "940GZZLUERC",
-                platform_departure_direction="Westbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle",
+            "940GZZLUERC",
+            "Westbound",
+            "940GZZLUERC",
+            platform_departure_direction="Westbound",
         )
 
     def test_circle_no_platform_south(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "circle", "940GZZLUWSM", "Westbound", "940GZZLUERC"
         )
 
     def test_circle_no_platform_north(self):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "circle", "940GZZLUBST", "Eastbound", "940GZZLUERC"
         )
 
     def test_circle_towards_erc_at_erc(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle", "940GZZLUERC", "Eastbound", "940GZZLUERC"
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle", "940GZZLUERC", "Eastbound", "940GZZLUERC"
         )
 
     def test_circle_no_platform_no_destination_no_towards_at_erc(self):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle", "940GZZLUERC", "Eastbound", None
-            )
-            is None
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle", "940GZZLUERC", "Eastbound", None
         )
 
     def test_circle_platform_no_destination_no_towards_at_erc_dep_dir(self):
         # not considered to be a terminus
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "circle",
-                "940GZZLUERC",
-                "Westbound",
-                None,
-                platform_departure_direction="Eastbound",
-            )
-            == False
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "circle",
+            "940GZZLUERC",
+            "Westbound",
+            None,
+            platform_departure_direction="Eastbound",
         )
 
     def test_circle_platform_no_destination_no_towards_at_erc_arr_dir(self):
         # not considered to be a terminus
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "circle",
             "940GZZLUERC",
             "Eastbound",
@@ -352,27 +305,23 @@ class TestIsDepartingFromStationInDirection:
             platform_departure_direction="Eastbound",
         )
 
-    def test_wrong_direction_prefer_platform_westbound(self, capsys):
-        assert (
-            tfl.will_arriving_train_depart_from_station_in_direction(
-                "district",
-                "940GZZLUWSM",
-                "Westbound",
-                "940GZZLUTWH",
-                platform_departure_direction="Eastbound",
-                train_canonical_direction="inbound",  # incoherent
-            )
-            == False
+    def test_wrong_direction_prefer_platform_westbound(self, caplog):
+        assert not tfl_tube.will_arriving_train_depart_from_station_in_direction(
+            "district",
+            "940GZZLUWSM",
+            "Westbound",
+            "940GZZLUTWH",
+            platform_departure_direction="Eastbound",
+            train_canonical_direction="inbound",  # incoherent
         )
-        captured = capsys.readouterr()
-        assert (
-            captured.out == "incoherent direction at 940GZZLUWSM "
+        assert caplog.text.endswith(
+            "incoherent direction at 940GZZLUWSM "
             "(district): towards None / destination 940GZZLUTWH / Eastbound "
             "platform / inbound\n"
         )
 
-    def test_wrong_direction_prefer_platform_eastbound(self, capsys):
-        assert tfl.will_arriving_train_depart_from_station_in_direction(
+    def test_wrong_direction_prefer_platform_eastbound(self, caplog):
+        assert tfl_tube.will_arriving_train_depart_from_station_in_direction(
             "district",
             "940GZZLUWSM",
             "Eastbound",
@@ -380,9 +329,8 @@ class TestIsDepartingFromStationInDirection:
             platform_departure_direction="Eastbound",
             train_canonical_direction="inbound",  # incoherent
         )
-        captured = capsys.readouterr()
-        assert (
-            captured.out == "incoherent direction at 940GZZLUWSM "
+        assert caplog.text.endswith(
+            "incoherent direction at 940GZZLUWSM "
             "(district): towards None / destination 940GZZLUTWH / Eastbound "
             "platform / inbound\n"
         )
@@ -390,59 +338,63 @@ class TestIsDepartingFromStationInDirection:
 
 class TestIsStationTerminusForTrain:
     def test_destination_equals_station(self):
-        assert tfl.is_station_terminus_for_train(
+        assert tfl_tube.is_station_terminus_for_train(
             "circle", "940GZZLUERC", destination_station_id="940GZZLUERC"
         )
 
     def test_towards_equals_station(self):
-        assert tfl.is_station_terminus_for_train(
+        assert tfl_tube.is_station_terminus_for_train(
             "circle", "940GZZLUERC", towards_station_id="940GZZLUERC"
         )
 
     def test_terminus_end_of_line(self):
-        assert tfl.is_station_terminus_for_train("district", "940GZZLUWIM")
+        assert tfl_tube.is_station_terminus_for_train("district", "940GZZLUWIM")
 
 
 class TestDirectionFromPlatformName:
     def test_westbound(self):
         assert (
-            tfl.departure_direction_from_platform_name("Westbound - Platform 1")
+            tfl_tube.departure_direction_from_platform_name("Westbound - Platform 1")
             == "Westbound"
         )
 
     def test_eastbound(self):
         assert (
-            tfl.departure_direction_from_platform_name("Eastbound - Platform 1")
+            tfl_tube.departure_direction_from_platform_name("Eastbound - Platform 1")
             == "Eastbound"
         )
 
     def test_northbound(self):
         assert (
-            tfl.departure_direction_from_platform_name("Northbound - Platform 1")
+            tfl_tube.departure_direction_from_platform_name("Northbound - Platform 1")
             == "Northbound"
         )
 
     def test_southbound(self):
         assert (
-            tfl.departure_direction_from_platform_name("Southbound - Platform 4")
+            tfl_tube.departure_direction_from_platform_name("Southbound - Platform 4")
             == "Southbound"
         )
 
     def test_northbound_fast(self):  # e.g. HOH
         assert (
-            tfl.departure_direction_from_platform_name("Northbound Fast - Platform 3")
+            tfl_tube.departure_direction_from_platform_name(
+                "Northbound Fast - Platform 3"
+            )
             == "Northbound"
         )
 
     def test_southbound_fast(self):  # e.g. HOH
         assert (
-            tfl.departure_direction_from_platform_name("Southbound Fast - Platform 6")
+            tfl_tube.departure_direction_from_platform_name(
+                "Southbound Fast - Platform 6"
+            )
             == "Southbound"
         )
 
     def test_outer(self):  # e.g. FLP
         assert (
-            tfl.departure_direction_from_platform_name(
+            tfl_tube.departure_direction_from_platform_name(
                 "Outer Rail - Platform 1",
             )
             == "Outer Rail"
@@ -450,7 +402,7 @@ class TestDirectionFromPlatformName:
 
     def test_inner(self):  # e.g. FLP
         assert (
-            tfl.departure_direction_from_platform_name(
+            tfl_tube.departure_direction_from_platform_name(
                 "Inner Rail - Platform 2",
             )
             == "Inner Rail"
@@ -458,25 +410,25 @@ class TestDirectionFromPlatformName:
 
     def test_westbound_no_dash(self):  # at WLO
         assert (
-            tfl.departure_direction_from_platform_name("Westbound Platform 26")
+            tfl_tube.departure_direction_from_platform_name("Westbound Platform 26")
             == "Westbound"
         )
 
     def test_westbound_upper_b(self):  # at BDS
         assert (
-            tfl.departure_direction_from_platform_name("WestBound - Platform 2")
+            tfl_tube.departure_direction_from_platform_name("WestBound - Platform 2")
             == "Westbound"
         )
 
     def test_eastbound_upper_b(self):  # at BDS
         assert (
-            tfl.departure_direction_from_platform_name("EastBound - Platform 1")
+            tfl_tube.departure_direction_from_platform_name("EastBound - Platform 1")
             == "Eastbound"
         )
 
     def test_unmatched(self):  # at ASG
         assert (
-            tfl.departure_direction_from_platform_name(
+            tfl_tube.departure_direction_from_platform_name(
                 "Eastbound/Westbound - Platform 2/3"
             )
             is None
@@ -485,62 +437,68 @@ class TestDirectionFromPlatformName:
 
 class TestNumberFromPlatformName:
     def test_single(self):
-        assert tfl.number_from_platform_name("Westbound - Platform 1") == "1"
+        assert tfl_tube.number_from_platform_name("Westbound - Platform 1") == "1"
 
     def test_multiple(self):  # at ASG
         assert (
-            tfl.number_from_platform_name("Eastbound/Westbound - Platform 2/3") == "2/3"
+            tfl_tube.number_from_platform_name("Eastbound/Westbound - Platform 2/3")
+            == "2/3"
         )
 
     def test_unmatched(self):  # at CSM
-        assert tfl.number_from_platform_name("North / South") is None
+        assert tfl_tube.number_from_platform_name("North / South") is None
 
 
 class TestStationIdFromTowards:
     def test_station_id_from_towards_normal(self):
-        assert tfl.station_id_from_towards("Hainault", "central") == "940GZZLUHLT"
+        assert tfl_tube.station_id_from_towards("Hainault", "central") == "940GZZLUHLT"
 
     def test_station_id_from_towards_alt_name_ampersand(self):
         assert (
-            tfl.station_id_from_towards("Elephant and Castle", "bakerloo")
+            tfl_tube.station_id_from_towards("Elephant and Castle", "bakerloo")
             == "940GZZLUEAC"
         )
 
     def test_station_id_from_towards_apostrophe(self):
-        assert tfl.station_id_from_towards("Queen's Park", "bakerloo") == "940GZZLUQPS"
+        assert (
+            tfl_tube.station_id_from_towards("Queen's Park", "bakerloo")
+            == "940GZZLUQPS"
+        )
 
     def test_station_id_from_towards_via_lowercase_v(self):
         assert (
-            tfl.station_id_from_towards("Hainault via Newbury Park", "central")
+            tfl_tube.station_id_from_towards("Hainault via Newbury Park", "central")
             == "940GZZLUHLT"
         )
 
     def test_station_id_from_towards_via_uppercase_v(self):
         assert (
-            tfl.station_id_from_towards("Woodford Via Hainault", "central")
+            tfl_tube.station_id_from_towards("Woodford Via Hainault", "central")
             == "940GZZLUWOF"
         )
 
     def test_station_id_from_towards_alt_name_circle(self):
         assert (
-            tfl.station_id_from_towards("Edgware Road (Circle)", "circle")
+            tfl_tube.station_id_from_towards("Edgware Road (Circle)", "circle")
             == "940GZZLUERC"
         )
 
     def test_station_id_from_towards_alt_name_hr5(self):
         assert (
-            tfl.station_id_from_towards("Heathrow T123 + 5", "piccadilly")
+            tfl_tube.station_id_from_towards("Heathrow T123 + 5", "piccadilly")
             == "940GZZLUHR5"
         )
 
     def test_station_id_from_towards_alt_name_hr4(self):
         assert (
-            tfl.station_id_from_towards("Heathrow via T4 Loop", "piccadilly")
+            tfl_tube.station_id_from_towards("Heathrow via T4 Loop", "piccadilly")
             == "940GZZLUHR4"
         )
 
     def test_station_id_from_towards_not_a_station(self):
-        assert tfl.station_id_from_towards("Check Front of Train", "circle") is None
+        assert (
+            tfl_tube.station_id_from_towards("Check Front of Train", "circle") is None
+        )
 
 
 class TestLocationPlatformFromCurrentLocation:
@@ -550,59 +508,61 @@ class TestLocationPlatformFromCurrentLocation:
     #    sample-tube-arrivals-20181230T121143Z.json
 
     def test_location_platform(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At Arsenal Platform 2"
         )
         assert (location, platform) == ("Arsenal", "2")
 
     def test_location_platform_two_digit_platform(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At Baker Street Platform 10"
         )
         assert (location, platform) == ("Baker Street", "10")
 
     def test_location_platform_comma(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At East Finchley, Platform 1"
         )
         assert (location, platform) == ("East Finchley", "1")
 
     def test_location_platform_typo_plaform(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At London Bridge Plaform 1"
         )
         assert (location, platform) == ("London Bridge", "1")
 
     def test_location_platform_p_for_platform(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At Kings Cross P7"
         )
         assert (location, platform) == ("Kings Cross", "7")
 
     def test_location_platform_no_number(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At Angel platform"
         )
         assert (location, platform) == ("Angel", None)
 
     def test_location_no_platform(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At Mornington Crescent"
         )
         assert (location, platform) == ("Mornington Crescent", None)
 
     def test_location_not_a_station(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "At North Acton Junction"
         )
         assert (location, platform) == ("North Acton Junction", None)
 
     def test_at_platform(self):
-        location, platform = tfl.location_platform_from_current_location("At Platform")
+        location, platform = tfl_tube.location_platform_from_current_location(
+            "At Platform"
+        )
         assert (location, platform) == ("<current>", "<current>")
 
     def test_not_current_location_at(self):
-        location, platform = tfl.location_platform_from_current_location(
+        location, platform = tfl_tube.location_platform_from_current_location(
             "Not At East Finchley, Platform 1"
         )
         assert (location, platform) == (None, None)
@@ -615,7 +575,10 @@ class TestCurrentStationPlatformFromCurrentLocation:
     #     sample-tube-arrivals-20181230T121143Z.json
 
     def test_location_platform(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At Arsenal Platform 2",
             "piccadilly",
             "940GZZLULSQ",
@@ -624,7 +587,10 @@ class TestCurrentStationPlatformFromCurrentLocation:
         assert (station, platform) == ("940GZZLUASL", "2")
 
     def test_location_platform_two_digit_platform(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At Baker Street Platform 10",
             "jubilee",
             "940GZZLUWHP",
@@ -633,7 +599,10 @@ class TestCurrentStationPlatformFromCurrentLocation:
         assert (station, platform) == ("940GZZLUBST", "10")
 
     def test_location_platform_comma(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At East Finchley, Platform 1",
             "northern",
             "940GZZLUWOP",
@@ -642,13 +611,19 @@ class TestCurrentStationPlatformFromCurrentLocation:
         assert (station, platform) == ("940GZZLUEFY", "1")
 
     def test_location_platform_no_number(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At Angel platform", "northern", "940GZZLUBTC", "Southbound - Platform 2"
         )
         assert (station, platform) == ("940GZZLUAGL", None)
 
     def test_location_no_platform(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At Mornington Crescent",
             "northern",
             "940GZZLUWFN",
@@ -657,7 +632,10 @@ class TestCurrentStationPlatformFromCurrentLocation:
         assert (station, platform) == ("940GZZLUMTC", None)
 
     def test_location_not_a_station(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At North Acton Junction",
             "central",
             "940GZZLUTCR",
@@ -666,7 +644,10 @@ class TestCurrentStationPlatformFromCurrentLocation:
         assert (station, platform) == (None, None)
 
     def test_at_platform(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "At Platform",
             "piccadilly",
             "940GZZLUASG",
@@ -675,7 +656,10 @@ class TestCurrentStationPlatformFromCurrentLocation:
         assert (station, platform) == ("940GZZLUASG", "2/3")
 
     def test_not_current_location_at(self):
-        station, platform = tfl.current_station_platform_number_from_current_location(
+        (
+            station,
+            platform,
+        ) = tfl_tube.current_station_platform_number_from_current_location(
             "Not At East Finchley, Platform 1",
             "northern",
             "940GZZLUWOP",
@@ -686,29 +670,32 @@ class TestCurrentStationPlatformFromCurrentLocation:
 
 class TestStationFromLocation:
     def test_station(self):
-        assert tfl.station_from_location("Gants Hill", None, "central") == "940GZZLUGTH"
+        assert (
+            tfl_tube.station_from_location("Gants Hill", None, "central")
+            == "940GZZLUGTH"
+        )
 
     def test_station_alternative_name(self):
         assert (
-            tfl.station_from_location("Elephant and Castle", None, "northern")
+            tfl_tube.station_from_location("Elephant and Castle", None, "northern")
             == "940GZZLUEAC"
         )
 
     def test_not_station_known_location(self):
         assert (
-            tfl.station_from_location("North Acton Junction", None, "central") is None
+            tfl_tube.station_from_location("North Acton Junction", None, "central")
+            is None
         )
 
-    def test_not_station_unknown_location(self, capsys):
-        assert tfl.station_from_location("Somewhere", None, "central") is None
-        captured = capsys.readouterr()
-        assert captured.out == ("unresolved location Somewhere\n")
+    def test_not_station_unknown_location(self, caplog):
+        assert tfl_tube.station_from_location("Somewhere", None, "central") is None
+        assert caplog.text.endswith("unresolved location Somewhere\n")
 
 
 class TestCircleLineRailArrivingAtStation:
     def test_platform_westbound_outer_rail(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUVIC", platform_departure_direction="Westbound"
             )
             == "Outer Rail"
@@ -716,7 +703,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_platform_westbound_inner_rail(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUBST", platform_departure_direction="Westbound"
             )
             == "Inner Rail"
@@ -724,7 +711,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_platform_eastbound_outer_rail(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUGPS", platform_departure_direction="Eastbound"
             )
             == "Outer Rail"
@@ -732,7 +719,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_platform_eastbound_outer_rail_erc(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUERC", platform_departure_direction="Eastbound"
             )
             == "Outer Rail"
@@ -740,7 +727,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_platform_eastbound_inner_rail(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUEMB", platform_departure_direction="Eastbound"
             )
             == "Inner Rail"
@@ -748,7 +735,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_terminating_erc(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUMMT", destination_station_id="940GZZLUERC"
             )
             == "Outer Rail"
@@ -756,7 +743,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_terminating_hsc(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUMMT", destination_station_id="940GZZLUHSC"
             )
             == "Inner Rail"
@@ -764,7 +751,7 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_towards_erc(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUMMT", towards_station_id="940GZZLUERC"
             )
             == "Outer Rail"
@@ -772,18 +759,18 @@ class TestCircleLineRailArrivingAtStation:
 
     def test_towards_hsc(self):
         assert (
-            tfl.circle_line_rail_arriving_at_station(
+            tfl_tube.circle_line_rail_arriving_at_station(
                 "940GZZLUMMT", towards_station_id="940GZZLUHSC"
             )
             == "Inner Rail"
         )
 
     def test_undefined(self):
-        assert tfl.circle_line_rail_arriving_at_station("940GZZLUMMT") is None
+        assert tfl_tube.circle_line_rail_arriving_at_station("940GZZLUMMT") is None
 
 
 class TestFilterTrainsByDirectionOfDeparture:
-    def test_bkf_eastbound(self, capsys):
+    def test_bkf_eastbound(self, caplog):
         """
         jq "[.[] | select(.naptanId == \"940GZZLUBKF\")]" \
             sample-line-district_circle-arrivals-20190111.json \
@@ -794,10 +781,12 @@ class TestFilterTrainsByDirectionOfDeparture:
             pathlib.Path(__file__).parent
             / "data/line-arrivals-circle_district-BKF.json",
             "r",
-        ) as fh:
-            line_arrivals = json.load(fh)
+        ) as file_handler:
+            line_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_by_direction_of_departure(line_arrivals, "Eastbound")
+        trains = tfl_tube.filter_trains_by_direction_of_departure(
+            line_arrivals, "Eastbound"
+        )
 
         assert len(trains) == 13
 
@@ -850,22 +839,23 @@ class TestFilterTrainsByDirectionOfDeparture:
         # fake entry with incoherent direction (inbound) vs platform
         # (Eastbound); actual is Eastbound
         assert trains["district-063"]
-        captured = capsys.readouterr()
-        assert (
-            captured.out == "incoherent direction at 940GZZLUWSM "
+        assert caplog.text.endswith(
+            "incoherent direction at 940GZZLUWSM "
             "(district): towards 940GZZLUTWH / destination 940GZZLUTWH / "
             "Eastbound platform / inbound\n"
         )
 
-    def test_bkf_westbound(self, capsys):
+    def test_bkf_westbound(self, caplog):
         with open(
             pathlib.Path(__file__).parent
             / "data/line-arrivals-circle_district-BKF.json",
             "r",
-        ) as fh:
-            line_arrivals = json.load(fh)
+        ) as file_handler:
+            line_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_by_direction_of_departure(line_arrivals, "Westbound")
+        trains = tfl_tube.filter_trains_by_direction_of_departure(
+            line_arrivals, "Westbound"
+        )
 
         assert len(trains) == 12
 
@@ -928,9 +918,8 @@ class TestFilterTrainsByDirectionOfDeparture:
 
         # fake entry with incoherent direction (inbound) vs platform
         # (Eastbound); actual is Eastbound
-        captured = capsys.readouterr()
-        assert (
-            captured.out == "incoherent direction at 940GZZLUWSM "
+        assert caplog.text.endswith(
+            "incoherent direction at 940GZZLUWSM "
             "(district): towards 940GZZLUTWH / destination 940GZZLUTWH / "
             "Eastbound platform / inbound\n"
         )
@@ -946,10 +935,12 @@ class TestFilterTrainsByDirectionOfDeparture:
             pathlib.Path(__file__).parent
             / "data/line-arrivals-circle_district-BST.json",
             "r",
-        ) as fh:
-            line_arrivals = json.load(fh)
+        ) as file_handler:
+            line_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_by_direction_of_departure(line_arrivals, "Eastbound")
+        trains = tfl_tube.filter_trains_by_direction_of_departure(
+            line_arrivals, "Eastbound"
+        )
 
         assert len(trains) == 1
 
@@ -970,10 +961,12 @@ class TestFilterTrainsByDirectionOfDeparture:
             pathlib.Path(__file__).parent
             / "data/line-arrivals-circle_district-BST.json",
             "r",
-        ) as fh:
-            line_arrivals = json.load(fh)
+        ) as file_handler:
+            line_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_by_direction_of_departure(line_arrivals, "Westbound")
+        trains = tfl_tube.filter_trains_by_direction_of_departure(
+            line_arrivals, "Westbound"
+        )
 
         assert len(trains) == 0
 
@@ -992,10 +985,10 @@ class TestFilterTrainsCurrentlyAtPlatform:
 
         with open(
             pathlib.Path(__file__).parent / "data/tube-arrivals-at_BKF.json", "r"
-        ) as fh:
-            tube_arrivals = json.load(fh)
+        ) as file_handler:
+            tube_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_currently_at_platform(
+        trains = tfl_tube.filter_trains_currently_at_platform(
             tube_arrivals,
             line_ids=["district", "circle"],
             requested_station_id="940GZZLUBKF",
@@ -1018,10 +1011,10 @@ class TestFilterTrainsCurrentlyAtPlatform:
     def test_bkf_circle_district_westbound(self):
         with open(
             pathlib.Path(__file__).parent / "data/tube-arrivals-at_BKF.json", "r"
-        ) as fh:
-            tube_arrivals = json.load(fh)
+        ) as file_handler:
+            tube_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_currently_at_platform(
+        trains = tfl_tube.filter_trains_currently_at_platform(
             tube_arrivals,
             line_ids=["district", "circle"],
             requested_station_id="940GZZLUBKF",
@@ -1054,10 +1047,10 @@ class TestFilterTrainsCurrentlyAtPlatform:
 
         with open(
             pathlib.Path(__file__).parent / "data/tube-arrivals-at_BST.json", "r"
-        ) as fh:
-            tube_arrivals = json.load(fh)
+        ) as file_handler:
+            tube_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_currently_at_platform(
+        trains = tfl_tube.filter_trains_currently_at_platform(
             tube_arrivals,
             line_ids=["district", "circle"],
             requested_station_id="940GZZLUBST",
@@ -1080,10 +1073,10 @@ class TestFilterTrainsCurrentlyAtPlatform:
     def test_bst_circle_district_westbound(self):
         with open(
             pathlib.Path(__file__).parent / "data/tube-arrivals-at_BST.json", "r"
-        ) as fh:
-            tube_arrivals = json.load(fh)
+        ) as file_handler:
+            tube_arrivals = json.load(file_handler)
 
-        trains = tfl.filter_trains_currently_at_platform(
+        trains = tfl_tube.filter_trains_currently_at_platform(
             tube_arrivals,
             line_ids=["district", "circle"],
             requested_station_id="940GZZLUBST",
@@ -1096,7 +1089,7 @@ class TestFilterTrainsCurrentlyAtPlatform:
 class TestWillArrivingTrainDepartFromCurrentLocationInDirection:
     def test_arrived_at_terminus_arrival_direction(self):
         assert (
-            tfl.will_arriving_train_depart_from_current_location_in_direction(
+            tfl_tube.will_arriving_train_depart_from_current_location_in_direction(
                 "940GZZLUBNK",
                 "waterloo-city",
                 "940GZZLUBNK",
@@ -1108,7 +1101,7 @@ class TestWillArrivingTrainDepartFromCurrentLocationInDirection:
 
     def test_arrived_at_terminus_departure_direction(self):
         assert (
-            tfl.will_arriving_train_depart_from_current_location_in_direction(
+            tfl_tube.will_arriving_train_depart_from_current_location_in_direction(
                 "940GZZLUBNK",
                 "waterloo-city",
                 "940GZZLUBNK",
@@ -1120,7 +1113,7 @@ class TestWillArrivingTrainDepartFromCurrentLocationInDirection:
 
     def test_departing_from_terminus_towards(self):
         assert (
-            tfl.will_arriving_train_depart_from_current_location_in_direction(
+            tfl_tube.will_arriving_train_depart_from_current_location_in_direction(
                 "940GZZLUEBY", "central", "940GZZLUEBY", "Eastbound", "940GZZLUHLT"
             )
             == True
@@ -1128,7 +1121,7 @@ class TestWillArrivingTrainDepartFromCurrentLocationInDirection:
 
     def test_departing_from_terminus_departure_direction(self):
         assert (
-            tfl.will_arriving_train_depart_from_current_location_in_direction(
+            tfl_tube.will_arriving_train_depart_from_current_location_in_direction(
                 "940GZZLUEBY", "central", "940GZZLUEBY", "Eastbound", "940GZZLUWCY"
             )
             == True
@@ -1138,7 +1131,7 @@ class TestWillArrivingTrainDepartFromCurrentLocationInDirection:
 class TestDirectionOfTrainFromStationTerminatingAt:
     def test_end_of_line(self):
         assert (
-            tfl.canonical_direction_of_train_from_station_terminating_at(
+            tfl_tube.canonical_direction_of_train_from_station_terminating_at(
                 "central", "940GZZLUEBY", "940GZZLUHLT"
             )
             == "outbound"
@@ -1146,7 +1139,7 @@ class TestDirectionOfTrainFromStationTerminatingAt:
 
     def test_inline_single_terminating_direction(self):
         assert (
-            tfl.canonical_direction_of_train_from_station_terminating_at(
+            tfl_tube.canonical_direction_of_train_from_station_terminating_at(
                 "district", "940GZZLUVIC", "940GZZLUTWH"
             )
             == "outbound"
@@ -1154,7 +1147,7 @@ class TestDirectionOfTrainFromStationTerminatingAt:
 
     def test_inline_dual_terminating_directions_normal_service(self):
         assert (
-            tfl.canonical_direction_of_train_from_station_terminating_at(
+            tfl_tube.canonical_direction_of_train_from_station_terminating_at(
                 "central", "940GZZLULYS", "940GZZLUWCY"
             )
             == "inbound"
@@ -1162,7 +1155,7 @@ class TestDirectionOfTrainFromStationTerminatingAt:
 
     def test_inline_dual_terminating_directions_end_of_service(self):
         assert (
-            tfl.canonical_direction_of_train_from_station_terminating_at(
+            tfl_tube.canonical_direction_of_train_from_station_terminating_at(
                 "central", "940GZZLUEBY", "940GZZLUWCY"
             )
             == "outbound"
@@ -1172,15 +1165,15 @@ class TestDirectionOfTrainFromStationTerminatingAt:
 class TestResolveTrainCanonicalDirection:
     def test_towards_end_of_line(self):
         assert (
-            tfl.resolve_train_canonical_direction(
+            tfl_tube.resolve_train_canonical_direction(
                 "central", "940GZZLUOXC", towards_station_id="940GZZLUEBY"
             )
             == "inbound"
         )
 
-    def test_towards_end_of_line_incoherent(self, capsys):
+    def test_towards_end_of_line_incoherent(self, caplog):
         assert (
-            tfl.resolve_train_canonical_direction(
+            tfl_tube.resolve_train_canonical_direction(
                 "central",
                 "940GZZLUOXC",
                 towards_station_id="940GZZLUEBY",
@@ -1189,16 +1182,15 @@ class TestResolveTrainCanonicalDirection:
             == "inbound"
         )
 
-        captured = capsys.readouterr()
-        assert (
-            captured.out == "incoherent direction at 940GZZLUOXC "
+        assert caplog.text.endswith(
+            "incoherent direction at 940GZZLUOXC "
             "(central): towards 940GZZLUHLT / destination 940GZZLUEBY / "
             "None platform / None\n"
         )
 
     def test_destination_end_of_line(self):
         assert (
-            tfl.resolve_train_canonical_direction(
+            tfl_tube.resolve_train_canonical_direction(
                 "central", "940GZZLUOXC", destination_station_id="940GZZLUEBY"
             )
             == "inbound"
@@ -1209,25 +1201,25 @@ class TestResolveTrainCanonicalDirection:
     def test_inline_single_terminating_direction(self):
         assert False
 
-    def test_inline_single_terminating_direction_incoherent(self, capsys):
+    def test_inline_single_terminating_direction_incoherent(self, caplog):
         assert False
 
     def test_inline_dual_term_dir_normal_service(self):
         assert False
 
-    def test_inline_dual_term_dir_normal_service_incoherent(self, capsys):
+    def test_inline_dual_term_dir_normal_service_incoherent(self, caplog):
         assert False
 
     def test_inline_dual_term_dir_end_of_service(self):
         assert False
 
-    def test_inline_dual_term_dir_end_of_service_incoherent(self, capsys):
+    def test_inline_dual_term_dir_end_of_service_incoherent(self, caplog):
         assert False
 
     def test_from_platform(self):
         assert False
 
-    def test_from_platform_incoherent(self, capsys):
+    def test_from_platform_incoherent(self, caplog):
         assert False
 
     def test_from_canonical_direction(self):
@@ -1237,10 +1229,10 @@ class TestResolveTrainCanonicalDirection:
 
 class TestInverseCanonicalDirection:
     def test_inbound(self):
-        assert tfl.inverse_canonical_direction("inbound") == "outbound"
+        assert tfl_tube.inverse_canonical_direction("inbound") == "outbound"
 
     def test_outbound(self):
-        assert tfl.inverse_canonical_direction("outbound") == "inbound"
+        assert tfl_tube.inverse_canonical_direction("outbound") == "inbound"
 
     def test_random(self):
-        assert tfl.inverse_canonical_direction("random") is None
+        assert tfl_tube.inverse_canonical_direction("random") is None

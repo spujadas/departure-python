@@ -1,7 +1,8 @@
 import pytest
 
-import departure_board.board.movement as movement
+import departure.board.movement as movement
 
+# pylint: disable=protected-access
 
 class TestStaticContent:
     def test_init(self):
@@ -231,7 +232,7 @@ class TestScrollingContent:
         assert scrolling_content.y_offset == 8
 
 
-class TestMovementCycle:
+class TestMovementCycle:  # pylint: disable=attribute-defined-outside-init
     def setup_method(self):
         self.tracker = movement.MovementCycle(
             [movement.StaticContent(200), movement.ScrollingContent(15, 4, -1, 0)]

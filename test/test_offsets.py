@@ -1,5 +1,7 @@
-import departure_board.board.board as board
-import departure_board.board.movement as movement
+import departure.board.board as board
+import departure.board.movement as movement
+
+# pylint: disable=protected-access
 
 
 class TestRepeatedOffsets:
