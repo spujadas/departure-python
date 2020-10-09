@@ -10,10 +10,10 @@ _term() {
 trap _term SIGTERM SIGINT
 
 # start API server
-cd /home/pi/departure-board/python
+cd /home/pi/departure/python
 source ../set_env_vars.sh
 source ../set_board.sh
 source .venv/bin/activate
-uvicorn api_server:app --reload --host 0.0.0.0 &
+departure-web &
 child_pid=$!
 wait $child_pid

@@ -1,4 +1,4 @@
-/var/log/departure-board.log {
+/var/log/departure.log {
   daily
   rotate 7
   compress

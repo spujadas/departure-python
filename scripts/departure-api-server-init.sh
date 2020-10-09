@@ -1,19 +1,19 @@
 #! /bin/bash
 
 ### BEGIN INIT INFO
-# Provides:          departure-board
+# Provides:          departure
 # Required-Start:    $all
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: departure-board service
+# Short-Description: departure service
 # Description:       Run departure board service
 ### END INIT INFO
 
 
-DAEMON="/home/pi/departure-board/start_api_server.sh"
+DAEMON="/home/pi/departure/start_api_server.sh"
 daemon_USER="pi"
-daemon_NAME="departure-board"
+daemon_NAME="departure"
 daemon_PID="/run/${daemon_NAME}.pid"
 daemon_LOG="/var/log/${daemon_NAME}.log"
 
