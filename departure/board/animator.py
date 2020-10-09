@@ -3,7 +3,7 @@ import threading
 import logging
 
 from departure.board.board import Board
-from departure.renderer.renderer import Renderer
+from departure.board.renderer import Renderer
 
 logger = logging.getLogger(__name__)
 

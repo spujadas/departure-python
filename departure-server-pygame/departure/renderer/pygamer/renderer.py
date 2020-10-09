@@ -1,6 +1,6 @@
 import pygame
 
-from departure.renderer import renderer
+from departure.board import renderer
 
 
 class PygameRenderer(renderer.Renderer):

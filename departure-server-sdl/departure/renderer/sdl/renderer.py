@@ -2,7 +2,7 @@ import os
 import ctypes.util
 import sdl2
 
-from departure.renderer import renderer
+from departure.board import renderer
 
 
 class SdlRendererException(Exception):

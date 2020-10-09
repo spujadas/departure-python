@@ -10,8 +10,11 @@ import click
 import departure.board.animator as animator
 import departure.board.board_updater as board_updater
 import departure.board.board as board
-import departure.renderer.sdl_ext.sdl_ext as sdl_ext_renderer
 import departure.board.departure_pb2_grpc as departure_pb2_grpc
+
+from . import renderer
+
+COMMAND='sdl-ext'
 
 logger = logging.getLogger(__name__)
 
@@ -29,13 +32,13 @@ class BoardManagerServicer(departure_pb2_grpc.BoardManagerServicer):
 @click.command(name='ext')
 @click.option('--small', is_flag=True)
 def run(small=False):
-    tfl_board = board.Board(192, 32)
+    target_board = board.Board(192, 32)
 
     # initialise renderer
     if small:
-        target_renderer = sdl_ext_renderer.SdlExtRendererActualSize()
+        target_renderer = renderer.SdlExtRendererActualSize()
     else:
-        target_renderer = sdl_ext_renderer.SdlExtRendererLarge()
+        target_renderer = renderer.SdlExtRendererLarge()
 
     target_renderer.initialise((192, 32))
 
@@ -44,17 +47,17 @@ def run(small=False):
 
     # initialise board animator
     animator_thread = animator.BoardAnimator(
-        board=tfl_board,
+        board=target_board,
         renderer=target_renderer,
         time_step_in_s=0.05,
         board_lock=board_lock,
         end_event=end_event,
     )
 
-    # initilaise board updater (also initialises board with 3 rows)
+    # initialise board updater (also initialises board with 3 rows)
     target_board_updater = (
         board_updater.BoardUpdater_192_32_3_Rows_From_ProtocolBuffers(
-            target_board=tfl_board, board_lock=board_lock
+            target_board=target_board, board_lock=board_lock
         )
     )
 

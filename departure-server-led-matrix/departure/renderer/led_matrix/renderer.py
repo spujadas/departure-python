@@ -1,6 +1,6 @@
 from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
-from . import renderer
+from departure.board import renderer
 
 
 class Renderer(renderer.Renderer):
