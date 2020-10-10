@@ -4,12 +4,9 @@ from tabulate import tabulate
 def list_lines(lines):
     table = []
     for line in sorted(lines, key=lambda k: k["code"]):
-        table.append([line["id"],
-            f"{line['reseau']} {line['code']}",
-            line["name"]
-        ])
+        table.append([line["id"], f"{line['reseau']} {line['code']}", line["name"]])
 
-    print(tabulate(table, headers=['id', 'code', 'nom']))
+    print(tabulate(table, headers=["id", "code", "nom"]))
 
 
 def list_directions(directions):

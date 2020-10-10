@@ -4,6 +4,7 @@ import departure.board.movement as movement
 
 # pylint: disable=protected-access
 
+
 class TestStaticContent:
     def test_init(self):
         static_content = movement.StaticContent(50)

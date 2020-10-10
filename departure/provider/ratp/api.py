@@ -6,9 +6,7 @@ WSDL_FILENAME = "data/Wsiv.wsdl"
 
 
 def soap_client():
-    return Client(
-        wsdl=os.path.join(os.path.dirname(__file__), WSDL_FILENAME)
-    )
+    return Client(wsdl=os.path.join(os.path.dirname(__file__), WSDL_FILENAME))
 
 
 def get_lines_realtime_realm():
@@ -27,9 +25,7 @@ def get_directions(line_id):
 
 
 def get_stations_by_line(line_id):
-    return soap_client().service.getStations(
-        station={"line": {"id": line_id}}
-    ).stations
+    return soap_client().service.getStations(station={"line": {"id": line_id}}).stations
 
 
 def get_stations_by_name(name_query):

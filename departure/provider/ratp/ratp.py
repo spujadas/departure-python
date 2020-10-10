@@ -96,9 +96,7 @@ def stations_by_name(name_query: str) -> list:
     return results
 
 
-def next_departures(
-    line_id: str, station_id: str, direction_sens: str
-) -> dict:
+def next_departures(line_id: str, station_id: str, direction_sens: str) -> dict:
     response = api.get_missions_next(line_id, station_id, direction_sens)
 
     # invalid station

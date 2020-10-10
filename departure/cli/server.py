@@ -39,13 +39,13 @@ try:
     # pylint: disable=no-member
     for finder, name, ispkg in iter_namespace(departure.renderer):
         # get .cli submodule
-        submodule = importlib.import_module('.cli', name)
+        submodule = importlib.import_module(".cli", name)
 
         # get run() function - bound to @click.command
-        command_function = getattr(submodule, 'run')
+        command_function = getattr(submodule, "run")
 
         # get command name for CLI
-        command_name = getattr(submodule, 'COMMAND')
+        command_name = getattr(submodule, "COMMAND")
 
         # add command to CLI
         entry_point.add_command(command_function, name=command_name)

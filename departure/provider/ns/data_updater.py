@@ -33,10 +33,7 @@ class DataUpdaterNS(data_updater.DataUpdater):
 
         # debugging: capture list of services to string, then log
         log_function_stdout_to_debug(
-            logger,
-            ui.list_departures_with_schedule,
-            departures,
-            self.station_code
+            logger, ui.list_departures_with_schedule, departures, self.station_code
         )
 
         # update board only if there were changes

@@ -214,7 +214,7 @@ def filter_trains_currently_at_platform(
     arrivals: List[Any],
     line_ids: List[str] = None,
     requested_station_id: str = None,
-    requested_direction: str = None
+    requested_direction: str = None,
 ):
     trains = {}
     processed_trains = set()

@@ -666,9 +666,7 @@ def _stations(data_path, stations_data_filename):
 
 
 def _station_id_by_name(stations):
-    return {
-        stations[station_id]["name"]: station_id for station_id in stations
-    }
+    return {stations[station_id]["name"]: station_id for station_id in stations}
 
 
 STATIONS = _stations(DATA_PATH, STATIONS_DATA_FILENAME)

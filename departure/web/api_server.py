@@ -73,16 +73,15 @@ async def shutdown_web_server():
 
 
 ### static files second (https://github.com/tiangolo/fastapi/issues/130) if root set
-if 'DEPARTURE_STATIC_WEBROOT' in os.environ:
+if "DEPARTURE_STATIC_WEBROOT" in os.environ:
     # index
     @app.get("/")
     async def read_index():
         return FileResponse(f"{os.environ['DEPARTURE_STATIC_WEBROOT']}/index.html")
 
-
     # other static files
     app.mount(
         "/",
-        StaticFiles(directory=os.environ['DEPARTURE_STATIC_WEBROOT']),
-        name="static"
+        StaticFiles(directory=os.environ["DEPARTURE_STATIC_WEBROOT"]),
+        name="static",
     )

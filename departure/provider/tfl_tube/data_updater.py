@@ -32,11 +32,7 @@ class DataUpdaterTflTube(data_updater.DataUpdater):
         trains = tfl_tube.next_trains(self.line_id, self.station_id, self.direction)
 
         # debugging: capture list of trains to string, then log
-        log_function_stdout_to_debug(
-            logger,
-            ui.list_trains_single_station,
-            trains
-        )
+        log_function_stdout_to_debug(logger, ui.list_trains_single_station, trains)
 
         # update board only if there were changes
         if trains == self.trains:

@@ -30,14 +30,14 @@ def search(query_string):
 
 
 @click.command(name="lines")
-@click.argument("code_query", required=False, default='')
+@click.argument("code_query", required=False, default="")
 def lines_by_code(code_query):
     lines_result = ratp.lines_by_code(code_query)
     ui.list_lines(lines_result)
 
 
 @click.command(name="lines-name")
-@click.argument("line_query", required=False, default='')
+@click.argument("line_query", required=False, default="")
 def lines_by_name(line_query):
     lines = ratp.lines_by_name(line_query.lower())
     ui.list_lines(lines)
@@ -80,9 +80,9 @@ def start_board(line_id, line_station_id, direction):
             view_model.ViewModelRatp_192_32_3_Rows_To_ProtocolBuffers,
             data_updater.DataUpdaterRatp,
             {
-                'line_id': line_id,
-                'line_station_id': line_station_id,
-                'direction': direction
+                "line_id": line_id,
+                "line_station_id": line_station_id,
+                "direction": direction,
             },
         ],
     ).start()

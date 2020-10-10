@@ -63,8 +63,7 @@ class BoardAnimator(threading.Thread):
 
             if missed > 1:
                 logger.warning(
-                    "exceeded animation loop step duration %s time(s)",
-                    missed - 1
+                    "exceeded animation loop step duration %s time(s)", missed - 1
                 )
 
             self.end_event.wait(delay)

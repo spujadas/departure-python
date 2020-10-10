@@ -5,6 +5,7 @@ import csv
 DATA_DIRNAME = "data"
 DATA_FILENAME = "stations-2020-01-nl.csv"
 
+
 def _stations_by_ns_code(data_dirname, data_filename):
     data_path = pathlib.Path(__file__).parents[0] / data_dirname / data_filename
 

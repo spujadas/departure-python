@@ -6,8 +6,7 @@ import departure.board.view_model as view_model
 import departure.board.contents as contents
 import departure.helpers as helpers
 import departure.board.departure_pb2 as departure_pb2
-import departure.board.departure_pb2_grpc as \
-    departure_pb2_grpc  # for type hinting
+import departure.board.departure_pb2_grpc as departure_pb2_grpc  # for type hinting
 import departure.board.protobuf as protobuf
 
 
@@ -167,7 +166,6 @@ class ViewModelNationalRail_192_32_3_Rows_To_ProtocolBuffers(
         self.no_movement = [
             departure_pb2.Movement(no_movement=departure_pb2.NoMovement())
         ]
-
 
     # pylint: disable=arguments-differ
     def update(self, services):

@@ -28,11 +28,7 @@ class DataUpdaterTransilien(data_updater.DataUpdater):
         trains = transilien.next_trains(self.station_id)
 
         # debugging: capture list of trains to string, then log
-        log_function_stdout_to_debug(
-            logger,
-            ui.list_trains,
-            trains
-        )
+        log_function_stdout_to_debug(logger, ui.list_trains, trains)
 
         # update board only if there were changes
         if trains == self.trains:

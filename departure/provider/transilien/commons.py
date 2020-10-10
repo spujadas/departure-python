@@ -12,6 +12,4 @@ def check_env_vars():
             missing_vars.append(transilien_env_var)
 
     if missing_vars:
-        raise TransilienException(
-            f"missing env vars {', '.join(missing_vars)}"
-        )
+        raise TransilienException(f"missing env vars {', '.join(missing_vars)}")

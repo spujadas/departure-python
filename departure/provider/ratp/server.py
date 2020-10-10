@@ -65,7 +65,7 @@ async def start_client(station_direction: StationDirection, request: Request):
         ratp.check_params(
             station_direction.line_id,
             station_direction.line_station_id,
-            station_direction.direction
+            station_direction.direction,
         )
     except commons.RatpException as e:
         logger.warning(str(e))

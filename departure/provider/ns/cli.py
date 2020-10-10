@@ -15,6 +15,7 @@ from . import ui, ns, commons, view_model, data_updater
 ONE_DAY_IN_SECONDS = 60 * 60 * 24
 logger = logging.getLogger(__name__)
 
+
 @click.group()
 def cli():
     pass

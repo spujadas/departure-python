@@ -148,7 +148,9 @@ def next_trains(stop_area_id: str, timetable_for_all_trains: bool = False):
             # extract times from date (formatted as "20200822T203600")
             "base_time": f"{base_departure_date_time[-6:-4]}:{base_departure_date_time[-4:-2]}",
             "time": f"{departure_date_time[-6:-4]}:{departure_date_time[-4:-2]}",
-            "commercial_mode": current_departure["display_informations"]["commercial_mode"],
+            "commercial_mode": current_departure["display_informations"][
+                "commercial_mode"
+            ],
         }
 
         # get timetables for 2nd and following trains if requested

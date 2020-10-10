@@ -27,6 +27,7 @@ def search(query_string):
     stations = transilien.stations_by_string(query_string)
     ui.list_stations(stations)
 
+
 @click.command(name="next")
 @click.argument("station_id")
 def next_trains(station_id):

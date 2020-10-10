@@ -18,12 +18,13 @@ from . import api
 ONE_DAY_IN_SECONDS = 60 * 60 * 24
 logger = logging.getLogger(__name__)
 
+
 @click.group()
 def cli():
     pass
 
 
-@click.command(name='search')
+@click.command(name="search")
 @click.argument("query_string")
 def search(query_string):
     stations_result = tfl_tube.stations_by_string(query_string)
@@ -41,9 +42,9 @@ def stations():
 
 
 @click.command(name="next")
-@click.argument('line_code')
-@click.argument('station_code')
-@click.argument('direction')
+@click.argument("line_code")
+@click.argument("station_code")
+@click.argument("direction")
 @click.option("--profiling", is_flag=True)
 def next_departures(line_code, station_code, direction, profiling):
     try:
@@ -69,10 +70,10 @@ def next_departures(line_code, station_code, direction, profiling):
         print(f"error: {str(e)}")
 
 
-@click.command(name="at-station", help='debugging only')
-@click.option('--line_codes', help='<line-id[,line-id]*>')
-@click.option('--station_code', help='<station-id>')
-@click.option('--direction', help='<direction>')
+@click.command(name="at-station", help="debugging only")
+@click.option("--line_codes", help="<line-id[,line-id]*>")
+@click.option("--station_code", help="<station-id>")
+@click.option("--direction", help="<direction>")
 def at_station(line_codes=None, station_code=None, direction=None):
     if line_codes is not None:
         line_codes = line_codes.split(",")
@@ -88,7 +89,7 @@ def at_station(line_codes=None, station_code=None, direction=None):
         arrivals = api.tube_arrivals(count=-1)
 
         if arrivals is None:
-            print('no arrivals')
+            print("no arrivals")
             return
 
         trains = tfl_tube.filter_trains_currently_at_platform(
@@ -101,9 +102,9 @@ def at_station(line_codes=None, station_code=None, direction=None):
 
 
 @click.command(name="board")
-@click.argument('line_code')
-@click.argument('station_code')
-@click.argument('direction_code')
+@click.argument("line_code")
+@click.argument("station_code")
+@click.argument("direction_code")
 def start_board(line_code, station_code, direction_code):
     line_id = ui.expanded_line_id(line_code)
     station_id = ui.expanded_station_id(station_code)
@@ -123,11 +124,7 @@ def start_board(line_code, station_code, direction_code):
         args=[
             view_model.ViewModelTflTube_192_32_3_Rows_To_ProtocolBuffers,
             data_updater.DataUpdaterTflTube,
-            {
-                'line_id': line_id,
-                'station_id': station_id,
-                'direction': direction
-            },
+            {"line_id": line_id, "station_id": station_id, "direction": direction},
         ],
     ).start()
 

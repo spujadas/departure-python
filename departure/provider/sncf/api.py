@@ -34,8 +34,10 @@ def api_request(url: str):
 
 
 def departures(station_id):
-    url = "https://api.navitia.io/v1/coverage/sncf/stop_areas/" \
+    url = (
+        "https://api.navitia.io/v1/coverage/sncf/stop_areas/"
         f"stop_area:OCE:SA:{station_id}/departures"
+    )
     return api_request(url)
 
 

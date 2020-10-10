@@ -15,7 +15,7 @@ def list_services(services):
         )
         calling_points = [
             f"{cp['location_name']} ({cp['st']} / {cp['et']})"
-            for cp in service['calling_points']
+            for cp in service["calling_points"]
         ]
         if i == 0:
             print(f"  Calling at: {', '.join(calling_points)} ({service['operator']})")

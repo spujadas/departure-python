@@ -34,16 +34,17 @@ class DataUpdaterRatp(data_updater.DataUpdater):
                 self.line_id, self.line_station_id, self.direction
             )
         except commons.RatpException as e:
-            logger.warning("%s - line id %s, line station id %s, direction %s",
-                str(e), self.line_id, self.line_station_id, self.direction)
+            logger.warning(
+                "%s - line id %s, line station id %s, direction %s",
+                str(e),
+                self.line_id,
+                self.line_station_id,
+                self.direction,
+            )
             return
 
         # debugging: capture list of departures to string, then log
-        log_function_stdout_to_debug(
-            logger,
-            ui.list_departures,
-            departures
-        )
+        log_function_stdout_to_debug(logger, ui.list_departures, departures)
 
         # update board only if there were changes
         if departures == self.departures:

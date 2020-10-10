@@ -13,7 +13,7 @@ def list_stations(stations=None):
     for station_id in sorted(stations):
         stations_table.append([station_id, stations[station_id]["nom"]])
 
-    print(tabulate(stations_table, headers=['UIC', 'nom']))
+    print(tabulate(stations_table, headers=["UIC", "nom"]))
     print(f"> total: {len(stations)}")
 
 

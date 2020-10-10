@@ -23,9 +23,7 @@ class Movement:
     def update(self, delta_time):
         # raise Exception if update() is called before reset()
         if not self._started:
-            raise MovementException(
-                f"movement not started for object {type(self)}"
-            )
+            raise MovementException(f"movement not started for object {type(self)}")
         return False  # have offsets changed?
 
     def set_offset(self, x_offset, y_offset):

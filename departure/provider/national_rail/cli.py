@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 def cli():
     pass
 
+
 @click.command()
 @click.argument("query_string")
 def search(query_string):

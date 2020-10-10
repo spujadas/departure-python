@@ -29,11 +29,7 @@ class DataUpdaterNationalRail(data_updater.DataUpdater):
             services = national_rail.next_services(self.station_id)
 
             # debugging: capture list of services to string, then log
-            log_function_stdout_to_debug(
-                logger,
-                ui.list_services,
-                services
-            )
+            log_function_stdout_to_debug(logger, ui.list_services, services)
 
             # update board only if there were changes
             if services == self.services:
@@ -43,8 +39,9 @@ class DataUpdaterNationalRail(data_updater.DataUpdater):
                 self.services = services
 
         except ConnectionError:
-            logger.warning("connection to National Rail failed after %s",
-                time.monotonic() - update_start_time)
+            logger.warning(
+                "connection to National Rail failed after %s",
+                time.monotonic() - update_start_time,
+            )
 
-        logger.info("data refresh duration %s",
-            time.monotonic() - update_start_time)
+        logger.info("data refresh duration %s", time.monotonic() - update_start_time)
