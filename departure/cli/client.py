@@ -17,8 +17,8 @@ init_logging()
 @click.group()
 def entry_point():
     """
-    Get station information and departures from transport operators, and update a
-    departure board with departure information for a station.
+    Get station information and departures from public transport operators, and update
+    a departure board with departure information for a station.
     """
 
 
