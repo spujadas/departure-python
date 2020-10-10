@@ -42,6 +42,7 @@ def search(query_string):
 
 @click.command()
 def lines():
+    """List lines and directions."""
     ui.list_lines()
 
 
