@@ -1,0 +1,15 @@
+# TFL
+export TFL_APP_KEY=xxx
+
+# National Rail
+export LDB_TOKEN=xxx
+
+# SNCF
+export SNCF_KEY=xxx
+
+# Transilien
+export TRANSILIEN_USER=xxx
+export TRANSILIEN_PASSWORD=xxx
+
+# Nederlandse Spoorwegen
+export NS_API_KEY=xxx

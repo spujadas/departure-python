@@ -1,0 +1,17 @@
+@echo off
+
+rem TFL
+set TFL_APP_KEY=xxx
+
+rem National Rail
+set LDB_TOKEN=xxx
+
+rem SNCF
+set SNCF_KEY=xxx
+
+rem Transilien
+set TRANSILIEN_USER=xxx
+set TRANSILIEN_PASSWORD=xxx
+
+rem Nederlandse Spoorwegen
+set NS_API_KEY=xxx

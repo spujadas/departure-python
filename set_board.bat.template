@@ -1,0 +1,2 @@
+@echo off
+set DEPARTURE_BOARD_SERVER=127.0.0.1

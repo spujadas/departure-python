@@ -33,17 +33,17 @@ def shutdown_board_server() -> dict:
     except AdminException as e:
         return { 'status': 'error', 'message': str(e) }
 
-    if "DEPARTURE_BOARD_SHUTDOWN_TOKEN" not in os.environ:
+    if "DEPARTURE_BOARD_RSHUTDOWN_TOKEN" not in os.environ:
         return {
             'status': 'error',
-            'message': 'missing DEPARTURE_BOARD_HTTP_PORT env var'
+            'message': 'missing DEPARTURE_BOARD_RSHUTDOWN_TOKEN env var'
         }
 
     # send shutdown request
     try:
         response = requests.post(
             url,
-            json={'token': os.environ['DEPARTURE_BOARD_SHUTDOWN_TOKEN']}
+            json={'token': os.environ['DEPARTURE_BOARD_RSHUTDOWN_TOKEN']}
         )
     except Exception as e:  # pylint: disable=broad-except
         logger.warning("Error shutting down board server: %s", str(e))
