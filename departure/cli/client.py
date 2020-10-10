@@ -12,18 +12,24 @@ from departure.provider.transilien import cli as transilien
 # initialise logging
 commons.init_logging()
 
+
 # CLI entry point
 @click.group()
 def entry_point():
-    pass
+    """
+    Get station information and departures from transport operators, and update a
+    departure board with departure information for a station.
+    """
+
 
 # add commands
+entry_point.add_command(tfl_tube.cli, name="lu")
 entry_point.add_command(ns.cli, name="ns")
 entry_point.add_command(national_rail.cli, name="national-rail")
 entry_point.add_command(ratp.cli, name="ratp")
 entry_point.add_command(sncf.cli, name="sncf")
-entry_point.add_command(tfl_tube.cli, name="tfl-tube")
 entry_point.add_command(transilien.cli, name="transilien")
+
 
 if __name__ == "__main__":
     entry_point()

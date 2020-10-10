@@ -18,12 +18,18 @@ logger = logging.getLogger(__name__)
 
 @click.group()
 def cli():
-    pass
+    """
+    Information and departures for National Rail (UK).
+
+    Note - Your Transilen API user and password must be assigned to the TRANSILIEN_USER
+    and TRANSILIEN_PASSWORD environment variables.
+    """
 
 
 @click.command()
 @click.argument("query_string")
 def search(query_string):
+    """Search for stations containing QUERY_STRING."""
     stations = transilien.stations_by_string(query_string)
     ui.list_stations(stations)
 
@@ -31,6 +37,12 @@ def search(query_string):
 @click.command(name="next")
 @click.argument("station_id")
 def next_trains(station_id):
+    """
+    Get next trains at station STATION_ID.
+
+    Use search to find the STATION_ID for a station.
+    """
+
     try:
         trains = transilien.next_trains(station_id)
     except commons.TransilienException as e:
@@ -43,6 +55,12 @@ def next_trains(station_id):
 @click.command(name="board")
 @click.argument("station_id")
 def start_board(station_id):
+    """
+    Update a departure board with trains at station STATION_ID.
+
+    Use search to find the STATION_ID for a station.
+    """
+
     try:
         transilien.check_params(station_id)
     except commons.TransilienException as e:

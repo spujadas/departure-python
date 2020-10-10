@@ -18,7 +18,7 @@ def list_stations(stations=None):
                 ]
                 for station_id in sorted(stations)
             ],
-            headers=["UIC", "nom", "libellé"],
+            headers=["id", "name", "label"],
         )
     )
 
@@ -26,5 +26,12 @@ def list_stations(stations=None):
 
 
 def list_trains(trains):
-    for train in trains:
-        print(f'{train["mission"]} {train["time"]} {train["terminus"]}')
+    print(
+        tabulate(
+            [
+                [train["mission"], train["time"], train["terminus"]]
+                for train in trains
+            ],
+            tablefmt="plain"
+        )
+    )

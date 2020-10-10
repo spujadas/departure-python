@@ -10,28 +10,44 @@ def list_lines(lines):
 
 
 def list_directions(directions):
-    for direction in directions.keys():
-        print(f"{direction} -> {directions[direction]}")
+    print(
+        tabulate(
+            [[direction, directions[direction]] for direction in directions.keys()],
+            headers=["code", "direction"],
+        )
+    )
 
 
 def list_stations(stations, show_line: bool = False, show_station_id: bool = False):
     table = []
 
+    # populate table
     for station in sorted(stations, key=lambda k: k["name"]):
-        station_item = {"name": station["name"]}
+        station_item = []
 
         if show_line:
-            station_item["line_id"] = station["line"]["id"]
-            station_item[
-                "line_name"
-            ] = f"{station['line']['reseau']} {station['line']['code']}"
+            station_item.append(station["line"]["id"])
+            station_item.append(
+                f"{station['line']['reseau']} {station['line']['code']}"
+            )
 
         if show_station_id:
-            station_item["line_station_id"] = station["line_station_id"]
+            station_item.append(station["line_station_id"])
+
+        station_item.append(station["name"])
 
         table.append(station_item)
 
-    print(tabulate(table, tablefmt="plain"))
+    # set table headers
+    headers = []
+    if show_line:
+        headers.extend(["line id", "line code"])
+    if show_station_id:
+        headers.append("line station id")
+    headers.append("station name")
+
+    # display table
+    print(tabulate(table, headers))
 
 
 def list_departures(departures):

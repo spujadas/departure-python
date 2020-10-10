@@ -48,13 +48,18 @@ def expanded_line_id(line_id: str) -> str:
 
 
 def list_lines() -> None:
+    table = []
     for line_id in data.lines:
-        print(line_id)
         for canonical_direction in data.lines[line_id]["canonical_directions"]:
-            print(
-                f"  {canonical_direction:8}\t"
-                f"{data.lines[line_id]['canonical_directions'][canonical_direction]}"
+            table.append(
+                [
+                    line_id,
+                    canonical_direction,
+                    data.lines[line_id]["canonical_directions"][canonical_direction],
+                ]
             )
+
+    print(tabulate(table, headers=["line id", "direction", "direction (alt.)"]))
 
 
 def list_stations(stations=None) -> None:
@@ -71,7 +76,8 @@ def list_stations(stations=None) -> None:
                     " ".join(stations[station_id]["lines"]),
                 ]
                 for station_id in sorted(stations)
-            ]
+            ],
+            headers=["station id", "station name", "line ids"],
         )
     )
 
@@ -79,13 +85,21 @@ def list_stations(stations=None) -> None:
 
 
 def list_trains_single_station(trains: dict):
+    table = []
     i = 1
+
+    # populate table
     for train in sorted(trains.values(), key=lambda a: a["time_to_station"]):
-        print(
-            f"{helpers.ordinal_en(i):>4} {train['towards']:32} "
-            f"{helpers.arrival_time_en(train['time_to_station'])}"
+        table.append(
+            [
+                helpers.ordinal_en(i),
+                train["towards"],
+                helpers.arrival_time_en(train["time_to_station"]),
+            ]
         )
         i += 1
+
+    print(tabulate(table, tablefmt="plain"))
 
 
 def list_trains_multiple_stations(trains: dict):
@@ -102,3 +116,4 @@ def list_trains_multiple_stations(trains: dict):
     for station_id in trains_by_station:
         print(station_id)
         list_trains_single_station(trains_by_station[station_id])
+        print()

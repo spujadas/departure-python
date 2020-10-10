@@ -74,7 +74,7 @@ def list_stations(stations: list):
                     stations, key=lambda i: stations[i]["name_long"]
                 )
             ],
-            headers=["id", "UIC", "name (medium)", "name (long)"],
+            headers=["NS code", "UIC", "name (medium)", "name (long)"],
         )
     )
 

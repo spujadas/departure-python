@@ -1,9 +1,22 @@
+"""
+UI for National Rail
+"""
+
+from tabulate import tabulate
+
 import departure.helpers as helpers
 
 
 def list_stations(stations):
-    for station in sorted(stations.items(), key=lambda k: k[1]):
-        print(f"{station[0]:6} {station[1]}")
+    print(
+        tabulate(
+            [
+                [station[0], station[1]]
+                for station in sorted(stations.items(), key=lambda k: k[1])
+            ],
+            headers=["id", "name"],
+        )
+    )
 
 
 def list_services(services):

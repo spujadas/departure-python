@@ -18,12 +18,18 @@ logger = logging.getLogger(__name__)
 
 @click.group()
 def cli():
-    pass
+    """
+    Information and departures for National Rail (UK).
+
+    Note - Your National Rail authorisation token must be assigned to the LDB_TOKEN
+    environment variable.
+    """
 
 
 @click.command()
 @click.argument("query_string")
 def search(query_string):
+    """Search for stations containing QUERY_STRING."""
     stations = national_rail.stations_by_string(query_string)
     ui.list_stations(stations)
 
@@ -31,6 +37,12 @@ def search(query_string):
 @click.command(name="next")
 @click.argument("station_id")
 def next_services(station_id):
+    """
+    Get next services at station STATION_ID.
+
+    Use search to find the STATION_ID for a station.
+    """
+
     services = national_rail.next_services(station_id.upper())
     ui.list_services(services)
 
@@ -38,6 +50,12 @@ def next_services(station_id):
 @click.command(name="board")
 @click.argument("station_id")
 def start_board(station_id):
+    """
+    Update a departure board with services at station STATION_ID.
+
+    Use search to find the STATION_ID for a station.
+    """
+
     station_id = station_id.upper()
 
     try:
