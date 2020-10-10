@@ -197,5 +197,6 @@ class ViewModelTransilien_192_32_3_Rows_To_ProtocolBuffers(ViewModelTransilien_1
             self.board_manager_stub.BoardSectionsUpdate(
                 departure_pb2.BoardSectionsUpdateRequest(requests=requests_data)
             )
-        except grpc._channel._Rendezvous:  # pylint: disable=protected-access
+        # pylint: disable=protected-access
+        except (grpc._channel._Rendezvous, grpc._channel._InactiveRpcError):
             logger.warning("connection to board failed")
