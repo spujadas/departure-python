@@ -10,6 +10,15 @@ import departure.renderer
 commons.init_logging()
 
 
+@click.group()
+def entry_point():
+    """
+    Starts a departure board display server using the back end specified by COMMAND.
+    Back ends are available as additional packages, see online documentation for full
+    list.
+    """
+
+
 # code from https://packaging.python.org/guides/creating-and-discovering-plugins/
 def iter_namespace(ns_pkg):
     # Specifying the second argument (prefix) to iter_modules makes the
@@ -32,15 +41,6 @@ for finder, name, ispkg in iter_namespace(departure.renderer):
 
     # add command to CLI
     entry_point.add_command(command_function, name=command_name)
-
-
-@click.group()
-def entry_point():
-    """
-    Starts a departure board display server using the back end specified by COMMAND.
-
-    Back ends are available as additional packages, see documentation for full list.
-    """
 
 
 if __name__ == "__main__":
