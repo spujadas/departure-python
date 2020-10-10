@@ -4,7 +4,7 @@ import grpc
 
 import departure.board.view_model as view_model
 import departure.board.contents as contents
-import departure.helpers as helpers
+import departure.commons.helpers as helpers
 
 import departure.board.departure_pb2 as departure_pb2
 import departure.board.departure_pb2_grpc as departure_pb2_grpc  # for type hinting

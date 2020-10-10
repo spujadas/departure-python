@@ -4,7 +4,7 @@ UI for National Rail
 
 from tabulate import tabulate
 
-import departure.helpers as helpers
+import departure.commons.helpers as helpers
 
 
 def list_stations(stations):

@@ -4,7 +4,7 @@ UI for Nederlandse Spoorwegen
 
 from tabulate import tabulate
 
-from departure import helpers
+import departure.commons.helpers as helpers
 from . import data
 
 

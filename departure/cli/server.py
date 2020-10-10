@@ -3,10 +3,10 @@ import pkgutil
 
 import click
 
-import departure.commons as commons
+from departure.commons.log import init_logging
 
 # initialise logging
-commons.init_logging()
+init_logging()
 
 
 # CLI entry point

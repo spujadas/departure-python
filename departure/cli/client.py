@@ -1,6 +1,6 @@
 import click
 
-import departure.commons as commons
+from departure.commons.log import init_logging
 from departure.provider.ns import cli as ns
 from departure.provider.national_rail import cli as national_rail
 from departure.provider.ratp import cli as ratp
@@ -10,7 +10,7 @@ from departure.provider.transilien import cli as transilien
 
 
 # initialise logging
-commons.init_logging()
+init_logging()
 
 
 # CLI entry point

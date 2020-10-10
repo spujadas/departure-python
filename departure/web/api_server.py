@@ -16,12 +16,12 @@ import departure.provider.tfl_tube.server as tfl_tube_server
 import departure.provider.transilien.server as transilien_server
 import departure.provider.ns.server as ns_server
 from departure.board import board_client
-import departure.commons as commons
-from departure import admin
+from departure.commons.log import init_logging
+from . import admin
 
 
 # initialise logging
-commons.init_logging()
+init_logging()
 
 # initialise app
 app = FastAPI()

@@ -3,7 +3,7 @@ import threading
 import logging
 
 import departure.board.data_updater as data_updater
-from departure.commons import log_function_stdout_to_debug
+from departure.commons.log import log_function_stdout_to_debug
 from . import view_model, sncf, ui
 
 logger = logging.getLogger(__name__)

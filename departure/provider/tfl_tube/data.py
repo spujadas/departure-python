@@ -2,7 +2,7 @@ import json
 import pathlib
 import os
 
-import departure.helpers as helpers
+import departure.commons.helpers as helpers
 from . import api
 
 DATA_DIRNAME = "data"
