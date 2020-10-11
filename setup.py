@@ -4,7 +4,7 @@ Setup for departure module
 
 from setuptools import setup, find_namespace_packages
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
@@ -13,7 +13,7 @@ setup(
     author="Sébastien Pujadas",
     author_email="sebastien@pujadas.net",
     description="Get station information and departures from public transport "
-        "operators, and control virtual or physical departure boards",
+        "operators, and control virtual or physical departure boards.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/spujadas/departure-python",
