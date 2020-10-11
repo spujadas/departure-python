@@ -45,7 +45,7 @@ To get started, display the main CLI's help page.
 $ departure
 ```
 
-[![asciicast](https://asciinema.org/a/364569.svg)](https://asciinema.org/a/364569)
+![departure CLI](images/departure-cli.svg)
 
 
 
@@ -55,7 +55,7 @@ The following command searches for SNCF (FR) stations containing "Paris".
 $ departure sncf search paris
 ```
 
-[![asciicast](https://asciinema.org/a/364572.svg)](https://asciinema.org/a/364572)
+![departure sncf search paris](images/departure-sncf-search-paris.svg)
 
 
 
@@ -65,7 +65,7 @@ The following command shows the next departures at Den Haag Centraal (NL).
 $ departure ns next gvc
 ```
 
-[![asciicast](https://asciinema.org/a/364571.svg)](https://asciinema.org/a/364571)
+![departure ns next gvc](images/departure-ns-next-gvc.svg)
 
 
 
@@ -75,7 +75,7 @@ The following command shows the next Westbound departures on Central Line at Oxf
 $ departure lu next ce oxc w
 ```
 
-[![asciicast](https://asciinema.org/a/364575.svg)](https://asciinema.org/a/364575)
+![departure lu next ce oxc w](images/departure-lu-next.svg)
 
 
 
@@ -137,7 +137,7 @@ Run the following command to list the available back ends.
 $ departure-server
 ```
 
-[![asciicast](https://asciinema.org/a/364602.svg)](https://asciinema.org/a/364602)
+![departure-server CLI](images/departure-server.svg)
 
 
 
