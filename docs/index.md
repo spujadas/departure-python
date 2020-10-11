@@ -121,7 +121,14 @@ Alternatively, you can use a REST GUI client, such as [Insomnia](https://insomni
 
 
 
-To use the Departure web front end, clone or download the [Departure front end](https://github.com/spujadas/departure-front-end) repository to any directory, point the `DEPARTURE_STATIC_WEBROOT` environment variable to this directory, and start the web API server (`departure-web`), then browse to the server on port 8000, e.g. http://localhost:8000.
+#### Web front end
+
+To use the Departure web front end:
+
+- Clone or download the [Departure front end](https://github.com/spujadas/departure-front-end) repository to any directory.
+- Point the `DEPARTURE_STATIC_WEBROOT` environment variable to the `static` subdirectory of this directory.
+- Start the web API server (`departure-web`).
+- Browse to the server on port 8000, e.g. http://localhost:8000.
 
 ![Departure web front end - SNCF Montparnasse](images/departure-web-sncf-montparnasse.gif)
 
