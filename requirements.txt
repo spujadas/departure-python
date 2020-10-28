@@ -14,7 +14,7 @@ chardet==3.0.4
 click==7.1.2
 colorama==0.4.3
 coverage==4.5.2
-cryptography==2.5
+cryptography==3.2
 dataclasses==0.7; python_version=='3.6'  # in core library since 3.7
 defusedxml==0.5.0
 docopt==0.6.2
