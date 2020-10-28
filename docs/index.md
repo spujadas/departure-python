@@ -125,8 +125,8 @@ Alternatively, you can use a REST GUI client, such as [Insomnia](https://insomni
 
 To use the Departure web front end:
 
-- Clone or download the [Departure front end](https://github.com/spujadas/departure-front-end) repository to any directory.
-- Point the `DEPARTURE_STATIC_WEBROOT` environment variable to the `static` subdirectory of this directory.
+- Download a release of the front-end from the Releases page of the [Departure front end](https://github.com/spujadas/departure-front-end) repository, and extract it to any directory.
+- Point the `DEPARTURE_STATIC_WEBROOT` environment variable to the directory you have just extracted the Departure front end to.
 - Start the web API server (`departure-web`).
 - Browse to the server on port 8000, e.g. http://localhost:8000.
 
