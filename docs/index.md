@@ -44,6 +44,8 @@ There are three command line interface tools:
 
 
 
+### Environment variables
+
 Before running `departure` or `departure-web`, set the following environment variables (see below for further instructions) for the public transport operators of interest:
 
 - London Underground (TfL Tube) – Set the `TFL_APP_KEY` environment variable to your TfL Unified API application key.
@@ -59,6 +61,15 @@ To set an environment variable with the name `SOME_VAR` and the value `some_valu
 
 - Windows: open a Command Prompt, and enter `set SOME_VAR=some_value`. The environment variable will be remembered as long as the Command Prompt is open.
 - Linux: open a console, and enter `export SOME_VAR=some_value`. The environment variable will be remembered in the current shell as long as it remains open.
+
+
+
+Alternatively, you can use the `set_env_vars.bat.template` and `set_env_vars.sh.template` files in the repository to set the environment variables automatically:
+
+- Remove the `.template` extension from the file(s) of interest for your system (`set_env_vars.bat.template` for Windows, `set_env_vars.bat.sh` for Linux).
+- Edit the file(s) to set the environment variables as explained above.
+- (Windows) In Command Prompt, enter `set_env_vars.bat` to set all defined environment variables.
+- (Linux) In a shell, enter `. ./set_env_vars.sh` or `source set_env_vars.sh` to set the environment variables.
 
 
 
