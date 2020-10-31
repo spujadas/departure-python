@@ -8,6 +8,7 @@ This is the documentation for the Python Departure package.
 
 Register for the transport operators you want to get information from (registration is free for all the transport operators at the time of writing):
 
+- London Underground (TfL Tube) – Register for a Transport for London (TfL) Unified API application key at https://api-portal.tfl.gov.uk/, and you will receive an application key by email.
 - National Rail –  Register for access to the National Rail Enquiries OpenLDBWS at http://realtime.nationalrail.co.uk/OpenLDBWSRegistration/, and you will receive an email containing a token.
 - Nederlandse Spoorwegen – Sign up on the NS API portal at https://apiportal.ns.nl/, register for the Ns-App product (https://apiportal.ns.nl/products), and retrieve your API key from your profile page.
 - RATP – Fill in the subscription form and send it to RATP's Open Data team as explained on https://data.ratp.fr/page/temps-reel/, under *S'inscrire*. Access to RATP's real-time API doesn't require an API key, but it does require that all calls be made from an authorised IP address.
@@ -45,6 +46,7 @@ There are three command line interface tools:
 
 Before running `departure` or `departure-web`, set the following environment variables (see below for further instructions) for the public transport operators of interest:
 
+- London Underground (TfL Tube) – Set the `TFL_APP_KEY` environment variable to your TfL Unified API application key.
 - National Rail – Set the `LDB_TOKEN` environment variable to your National Rail token.
 - Nederlandse Spoorwegen – Set the `NS_API_KEY` environment variable to your NS API key.
 - RATP – No environment variable is needed, but all calls must be made from the authorised IP address that you provided when you registered.
@@ -181,6 +183,8 @@ Written by [Sébastien Pujadas](https://pujadas.net/), released under the [MIT l
 
 All product names, logos, and brands are property of their respective owners. All company, product and service names used in this project are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
 
+The London Underground (TfL Tube) engine is powered by TfL Open Data. Contains OS data © Crown copyright and database rights 2016' and Geomni UK Map data © and database rights [2019].
+
 The National Rail engine is powered by [National Rail Enquiries](https://www.nationalrail.co.uk/). The built-in list of National Rail station codes was derived from https://www.nationalrail.co.uk/stations_destinations/48541.aspx.
 
 The built-in list of Nederlandse Spoorwegen station codes was retrieved from [Rijden de Treinen](https://www.rijdendetreinen.nl/over/open-data).
@@ -188,3 +192,4 @@ The built-in list of Nederlandse Spoorwegen station codes was retrieved from [Ri
 The built-in WSDL file used to access RATP's real-time web service was extracted from [RATP's API development kit](https://data.ratp.fr/page/temps-reel/).
 
 The built-in list of SNCF stations was obtained from the [Gares de voyageurs](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) dataset, which is released under the [ODbL (Open Database License)](https://data.sncf.com/pages/cgu/A1#A1).
+
