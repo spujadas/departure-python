@@ -9,6 +9,7 @@ This is the documentation for the Python Departure package.
 Get API keys for the transport operators you want to get information from:
 
 - National Rail –  Register for access to the National Rail Enquiries OpenLDBWS at http://realtime.nationalrail.co.uk/OpenLDBWSRegistration/, you will receive an email containing a token.
+- Nederlandse Spoorwegen – Sign up on the NS API portal at https://apiportal.ns.nl/, register for the Ns-App product (https://apiportal.ns.nl/products), and retrieve your API key from your profile page.
 - **TODO**
 
 Install Python.
@@ -41,6 +42,7 @@ There are three command line interface tools:
 Before running `departure` or `departure-web`, set the following environment variables (see below for further instructions) for the public transport operators of interest:
 
 - National Rail: set the `LDB_TOKEN` environment variable to your National Rail token.
+- Nederlandse Spoorwegen: set the `NS_API_KEY` environment variable to your NS API key.
 - **TODO**
 
 
@@ -174,4 +176,8 @@ Written by [Sébastien Pujadas](https://pujadas.net/), released under the [MIT l
 All product names, logos, and brands are property of their respective owners. All company, product and service names used in this project are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
 
 The National Rail engine is powered by [National Rail Enquiries](https://www.nationalrail.co.uk/). The built-in list of National Rail station codes was derived from https://www.nationalrail.co.uk/stations_destinations/48541.aspx.
+
+The built-in list of [Nederlandse Spoorwegen](http://ns.nl/) station codes was retrieved from [Rijden de Treinen](https://www.rijdendetreinen.nl/over/open-data).
+
+
 
