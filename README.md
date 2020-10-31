@@ -26,7 +26,7 @@ The video clip below was made using a physical LED matrix board running the [C++
 
 The [official web front end](https://github.com/spujadas/departure-front-end) provides a human-friendly way to interact with the web API server.
 
-![Departure web front end - SNCF Montparnasse](https://user-images.githubusercontent.com/930566/95666197-a39d7e00-0b57-11eb-9856-89579708c146.gif)
+![Departure web front end - SNCF Montparnasse](https://user-images.githubusercontent.com/930566/97785001-d65cf400-1ba2-11eb-8882-67284742c22c.gif)
 
 ### Documentation
 
@@ -39,4 +39,18 @@ See the [Departure-Python documentation web page](http://departure-python.readth
 Written by [Sébastien Pujadas](https://pujadas.net/), released under the [MIT license](https://github.com/spujadas/departure-python/blob/master/LICENSE).
 
 All product names, logos, and brands are property of their respective owners. All company, product and service names used in this project are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
+
+All product names, logos, and brands are property of their respective owners. All company, product and service names used in this project are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
+
+The London Underground (TfL Tube) engine is powered by TfL Open Data. Contains OS data © Crown copyright and database rights 2016' and Geomni UK Map data © and database rights [2019].
+
+The National Rail engine is powered by [National Rail Enquiries](https://www.nationalrail.co.uk/). The built-in list of National Rail station codes was derived from https://www.nationalrail.co.uk/stations_destinations/48541.aspx.
+
+The built-in list of Nederlandse Spoorwegen station codes was retrieved from [Rijden de Treinen](https://www.rijdendetreinen.nl/over/open-data).
+
+The built-in WSDL file used to access RATP's real-time web service was extracted from [RATP's API development kit](https://data.ratp.fr/page/temps-reel/).
+
+The built-in list of SNCF stations (used by the SNCF and Transilien engines) was obtained from the [Gares de voyageurs](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) dataset, which is released under the [ODbL (Open Database License)](https://data.sncf.com/pages/cgu/A1#A1).
+
+The built-in list of Transilien stations and stops was obtained from the [Gares et points d'arrêt du réseau Transilien](https://ressources.data.sncf.com/explore/dataset/sncf-gares-et-arrets-transilien-ile-de-france/) dataset, which is released under the [ODbL (Open Database License)](https://data.sncf.com/pages/cgu/A1#A1).
 
