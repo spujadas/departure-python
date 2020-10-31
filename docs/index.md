@@ -6,7 +6,7 @@ This is the documentation for the Python Departure package.
 
 ## Prerequisites
 
-Register for the transport operators you want to get information from (registration is free for all the transport operators at the time of writing):
+Register for the transport operators you want to get information from (registration is free for all the listed transport operators at the time of writing):
 
 - London Underground (TfL Tube) – Register for a Transport for London (TfL) Unified API application key at https://api-portal.tfl.gov.uk/, and you will receive an application key by email.
 - National Rail –  Register for access to the National Rail Enquiries OpenLDBWS at http://realtime.nationalrail.co.uk/OpenLDBWSRegistration/, and you will receive an email containing a token.
