@@ -6,11 +6,14 @@ This is the documentation for the Python Departure package.
 
 ## Prerequisites
 
-Get API keys for the transport operators you want to get information from:
+Register for the transport operators you want to get information from (registration is free for all the transport operators at the time of writing):
 
 - National Rail –  Register for access to the National Rail Enquiries OpenLDBWS at http://realtime.nationalrail.co.uk/OpenLDBWSRegistration/, you will receive an email containing a token.
 - Nederlandse Spoorwegen – Sign up on the NS API portal at https://apiportal.ns.nl/, register for the Ns-App product (https://apiportal.ns.nl/products), and retrieve your API key from your profile page.
+- RATP – Fill in the subscription form and send it to RATP's Open Data team as explained on https://data.ratp.fr/page/temps-reel/, under *S'inscrire*. Access to RATP's real-time API doesn't require an API key, but it does require that all calls be made from an authorised IP address.
 - **TODO**
+
+
 
 Install Python.
 
@@ -41,8 +44,9 @@ There are three command line interface tools:
 
 Before running `departure` or `departure-web`, set the following environment variables (see below for further instructions) for the public transport operators of interest:
 
-- National Rail: set the `LDB_TOKEN` environment variable to your National Rail token.
-- Nederlandse Spoorwegen: set the `NS_API_KEY` environment variable to your NS API key.
+- National Rail – Set the `LDB_TOKEN` environment variable to your National Rail token.
+- Nederlandse Spoorwegen – Set the `NS_API_KEY` environment variable to your NS API key.
+- RATP – No environment variable is needed, but all calls must be made from the authorised IP address that you provided when you registered.
 - **TODO**
 
 
@@ -177,7 +181,7 @@ All product names, logos, and brands are property of their respective owners. Al
 
 The National Rail engine is powered by [National Rail Enquiries](https://www.nationalrail.co.uk/). The built-in list of National Rail station codes was derived from https://www.nationalrail.co.uk/stations_destinations/48541.aspx.
 
-The built-in list of [Nederlandse Spoorwegen](http://ns.nl/) station codes was retrieved from [Rijden de Treinen](https://www.rijdendetreinen.nl/over/open-data).
+The built-in list of Nederlandse Spoorwegen station codes was retrieved from [Rijden de Treinen](https://www.rijdendetreinen.nl/over/open-data).
 
-
+The built-in WSDL file used to access RATP's real-time web service was extracted from [RATP's API development kit](https://data.ratp.fr/page/temps-reel/).
 
