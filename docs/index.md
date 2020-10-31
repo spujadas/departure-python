@@ -13,11 +13,11 @@ Register for the transport operators you want to get information from (registrat
 - Nederlandse Spoorwegen – Sign up on the NS API portal at https://apiportal.ns.nl/, register for the Ns-App product (https://apiportal.ns.nl/products), and retrieve your API key from your profile page.
 - RATP – Fill in the subscription form and send it to RATP's Open Data team as explained on https://data.ratp.fr/page/temps-reel/, under *S'inscrire*. Access to RATP's real-time API doesn't require an API key, but it does require that all calls be made from an authorised IP address.
 - SNCF – Register for access to the SNCF real-time API at https://www.digital.sncf.com/startup/api, and you will receive your API authentication key by email.
-- **TODO**
+- Transilien – Submit a request by email (see https://ressources.data.sncf.com/explore/dataset/api-temps-reel-transilien/information/), and you will receive your credentials by email.
 
 
 
-Install Python.
+Install Python 3.6 or greater.
 
 (Optional, recommended) create a Python virtual environment.
 
@@ -50,8 +50,8 @@ Before running `departure` or `departure-web`, set the following environment var
 - National Rail – Set the `LDB_TOKEN` environment variable to your National Rail token.
 - Nederlandse Spoorwegen – Set the `NS_API_KEY` environment variable to your NS API key.
 - RATP – No environment variable is needed, but all calls must be made from the authorised IP address that you provided when you registered.
-- SNCF – Set the `SNCF_KEY` environment variable to you SNCF API authentication key.
-- **TODO**
+- SNCF – Set the `SNCF_KEY` environment variable to your SNCF API authentication key.
+- Transilien – Set the `TRANSILIEN_USER` and `TRANSILIEN_PASSWORD` environment variables to your Transilien API credentials.
 
 
 
@@ -191,5 +191,6 @@ The built-in list of Nederlandse Spoorwegen station codes was retrieved from [Ri
 
 The built-in WSDL file used to access RATP's real-time web service was extracted from [RATP's API development kit](https://data.ratp.fr/page/temps-reel/).
 
-The built-in list of SNCF stations was obtained from the [Gares de voyageurs](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) dataset, which is released under the [ODbL (Open Database License)](https://data.sncf.com/pages/cgu/A1#A1).
+The built-in list of SNCF stations (used by the SNCF and Transilien engines) was obtained from the [Gares de voyageurs](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) dataset, which is released under the [ODbL (Open Database License)](https://data.sncf.com/pages/cgu/A1#A1).
 
+The built-in list of Transilien stations and stops was obtained from the [Gares et points d'arrêt du réseau Transilien](https://ressources.data.sncf.com/explore/dataset/sncf-gares-et-arrets-transilien-ile-de-france/) dataset, which is released under the [ODbL (Open Database License)](https://data.sncf.com/pages/cgu/A1#A1).
