@@ -27,7 +27,7 @@ setup(
     },
     install_requires=[
         "requests",
-        "protobuf",
+        "protobuf<4",
         "grpcio",
         "bdflib",
         "click",
